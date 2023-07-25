@@ -17,11 +17,11 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            form_login:
-                # "app_login" is the name of the route created previously
-                login_path: app_login
-                check_path: app_login
-                enable_csrf: true
+            # form_login:
+            #     # "app_login" is the name of the route created previously
+            #     login_path: app_login
+            #     check_path: app_login
+            #     enable_csrf: true
 
             # The maximum login attempts
             login_throttling:
@@ -30,6 +30,7 @@ security:
 
             logout:
                 path: app_logout
+            custom_authenticator: App\Security\AppCustomAuthenticator
     
     role_hierarchy:
             ROLE_ADMIN:       ROLE_USER

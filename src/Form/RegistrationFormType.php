@@ -5,24 +5,52 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('firstName')
-            ->add('lastName')
-            ->add('dateOfBirth')
+            ->add('firstName', TextType::class, [
+                "constraints" => new Regex([
+                    "pattern" => "/^[a-zA-Z]{2,}$/",
+                    "message" => "At least two letters, only letters are allowed"
+                ])
+            ])
+            ->add('lastName' , TextType::class , [
+                "constraints" => new Regex([
+                    "pattern" =>  "/^[a-zA-Z]{2,}$/",
+                    "message" => "At least two letters, only letters are allowed"
+                ])
+            ])
+            ->add('dateOfBirth' ,DateType::class, [
+                
+            ])
             ->add('email')
-            ->add('gender')
-            ->add('roles')
+            ->add('gender', ChoiceType::class, [
+                "choices" => [
+                    "Male" => "male",
+                    "Female" => "female"
+                ],
+                "constraints" => [
+                    new NotBlank([
+                        "message" => "Gender is Required"
+                    ])
+                ],
+                "expanded" => "true"
+            ])
+            ->add("address", AddressType::class)
+            // ->add('roles')
 
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
@@ -48,8 +76,7 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

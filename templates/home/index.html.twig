@@ -23,7 +23,7 @@
 
 		This friendly message is coming from:
 		<ul>
-        {% if app.user is defined %}
+        {% if app.user %}
 
 			<li>User Full Name is : {{ app.user.firstName ~" " ~ app.user.lastName  }}</li>
 			<li>User Email is :{{ app.user.email}}</li>
