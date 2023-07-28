@@ -23,6 +23,8 @@ Encore
   .addEntry("app", "./assets/app.js")
   .addStyleEntry("header", "./assets/styles/partials/header.scss")
   .addStyleEntry("login", "./templates/security/login.scss")
+  .addStyleEntry("register", "./templates/registration/register.scss")
+
 
   .copyFiles([{ from: "./assets/images", to: "images/[path][name].[ext]" }])
 

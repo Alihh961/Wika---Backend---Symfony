@@ -34,7 +34,11 @@ class RegistrationFormType extends AbstractType
                 ])
             ])
             ->add('dateOfBirth' ,DateType::class, [
-                
+                'label_attr'=> [
+                    "class" => "position-label date-input",
+                ]
+                ,
+                'widget' => 'single_text',
             ])
             ->add('email')
             ->add('gender', ChoiceType::class, [
@@ -42,12 +46,24 @@ class RegistrationFormType extends AbstractType
                     "Male" => "male",
                     "Female" => "female"
                 ],
+                "label_attr" => [
+                    "class" => "position-label"
+                ]
+                ,
+                "choice_attr" => [
+                    "Male" => ["class" => "toto"],
+                    "Female" => ["class" => "totdemale"]
+                ]
+                ,
                 "constraints" => [
                     new NotBlank([
                         "message" => "Gender is Required"
                     ])
                 ],
-                "expanded" => "true"
+                "expanded" => "true",
+                'attr' => [
+                    'class' => 'toto'
+                ]
             ])
             ->add("address", AddressType::class)
             // ->add('roles')

@@ -13,19 +13,26 @@ import "./bootstrap";
 
 // Sign-in Form
 
-let inputs = document.querySelectorAll(".login-input");
-// let label = document.querySelectorAll(".login-input + label");
-// console.log(label);
-inputs.forEach((input) => {
+let inputs = [document.querySelectorAll(".login-input"), document.querySelectorAll(".register-input")];
+
+for(let i = 0 ; i<inputs.length ; i++){
+
+inputs[i].forEach((input) => {
   input.addEventListener("focusout", () => {
+    console.log(input.value);
+
     if (input.value != "") {
-    //   let label = document.querySelectorAll(".login-input + label");
-    //   label.classList.add('label-position-up');
-    input.classList.add("tes");
+      // if(input.classList.contains("date-input")){
+        
+      // }
+      
+      input.classList.add("translate");
     } else {
-        input.classList.remove("tes");
-
+      input.classList.remove("translate");
     }
-
   });
 });
+
+}
+
+console.log("works");
