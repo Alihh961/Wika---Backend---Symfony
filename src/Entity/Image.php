@@ -3,64 +3,33 @@
 namespace App\Entity;
 
 use App\Repository\ImageRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
-
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 class Image extends Media
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'image', targetEntity: Nft::class)]
-    private Collection $nfts;
-
-    public function __construct()
-    {
-        $this->nfts = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
+    #[ORM\Column(length: 255)]
+    private ?string $resolution = null;
 
-    /**
-     * @return Collection<int, Nft>
-     */
-    public function getNfts(): Collection
+    // Getters and setters for the specific property
+
+    public function getResolution(): ?string
     {
-        return $this->nfts;
+        return $this->resolution;
     }
 
-    public function addNft(Nft $nft): static
+    public function setResolution(string $resolution): self
     {
-        if (!$this->nfts->contains($nft)) {
-            $this->nfts->add($nft);
-            $nft->setImage($this);
-        }
-
+        $this->resolution = $resolution;
         return $this;
-    }
-
-    public function removeNft(Nft $nft): static
-    {
-        if ($this->nfts->removeElement($nft)) {
-            // set the owning side to null (unless already changed)
-            if ($nft->getImage() === $this) {
-                $nft->setImage(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function __toString():string{
-        return $this->getName();
     }
 }
