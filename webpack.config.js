@@ -21,6 +21,7 @@ Encore
    * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
    */
   .addEntry("app", "./assets/app.js")
+  .addEntry("bootstrap", "./node_modules/bootstrap/dist/js/bootstrap.js")
   .addStyleEntry("header", "./assets/styles/partials/header.scss")
   .addStyleEntry("login", "./templates/security/login.scss")
   .addStyleEntry("register", "./templates/registration/register.scss")
