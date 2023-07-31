@@ -4,156 +4,168 @@
 {% endblock %}
 
 {% block stylesheets %}
-	{{ parent() }}
-	{{ encore_entry_link_tags('register') }}
+    {{ parent() }}
+    {{ encore_entry_link_tags('register') }}
 
 
 {% endblock %}
 
 {% block body %}
 
-	<div class="container mt-3 form-container">
-		{{ form_errors(registrationForm) }}
-		{{ form_start(registrationForm , { 
-        "attr" : {
-            "class" : "w-75 registration-form"
-    }
-    }
-    ) }}
-		<div class="row">
-			<div class="col-sm-12 mx-t3 mb-6">
-				<h2 class="text-center text-info">Register</h2>
-			</div>
-			<div class="col-sm-6 form-group">
+    <div class="container mt-3 form-container">
+        {{ form_errors(registrationForm) }}
+        {{ form_start(registrationForm , {
+            "attr" : {
+                "class" : "w-75 registration-form"
+            }
+        }
+        ) }}
+        <div class="row">
+            <div class="col-sm-12 mx-t3 mb-6">
+                <h2 class="text-center text-info">Register</h2>
+            </div>
+            <div class="col-sm-6 form-group">
 
-				{{ form_widget(registrationForm.firstName , {
-		"attr" : {
-			"class" : "register-input"
-		}
-	  }) }}
-				{{ form_label(registrationForm.firstName) }}
+                {{ form_widget(registrationForm.firstName , {
+                    "attr" : {
+                        "class" : "register-input"
+                    }
+                }) }}
+                {{ form_label(registrationForm.firstName) }}
 
-			</div>
+            </div>
 
-			<div class="col-sm-6 form-group">
-				{{ form_widget(registrationForm.lastName , {
-		"attr" : {
-			"class" : "register-input"
-		}
-	  }) }}
-				{{ form_label(registrationForm.lastName) }}
-			</div>
+            <div class="col-sm-6 form-group">
+                {{ form_widget(registrationForm.lastName , {
+                    "attr" : {
+                        "class" : "register-input"
+                    }
+                }) }}
+                {{ form_label(registrationForm.lastName) }}
+            </div>
 
-			<div class="col-sm-6 form-group">
-				{{ form_widget(registrationForm.email , {
-		"attr" : {
-			"class" : "register-input"
-		}
-	  }) }}
-				{{ form_label(registrationForm.email) }}
-			</div>
+            <div class="col-sm-6 form-group">
+                {{ form_widget(registrationForm.email , {
+                    "attr" : {
+                        "class" : "register-input"
+                    }
+                }) }}
+                {{ form_label(registrationForm.email) }}
+            </div>
 
-			<div class="col-sm-6 form-group">
-				{{ form_widget(registrationForm.plainPassword , {
-		"attr" : {
-			"class" : "register-input"
-		}
-	  }) }}
-				{{ form_label(registrationForm.plainPassword) }}
-			</div>
+            <div class="col-sm-6 form-group">
+                {{ form_widget(registrationForm.plainPassword , {
+                    "attr" : {
+                        "class" : "register-input"
+                    }
+                }) }}
+                {{ form_label(registrationForm.plainPassword) }}
+            </div>
 
-			<div class="col-sm-6 form-group">
-				{{ form_widget(registrationForm.dateOfBirth , {
-		"attr" : {
-			"class" : "register-input"
-		}
-	  }) }}
-				{{ form_label(registrationForm.dateOfBirth) }}
-			</div>
+            <div class="col-sm-6 form-group">
+                {{ form_widget(registrationForm.dateOfBirth , {
+                    "attr" : {
+                        "class" : "register-input"
+                    }
+                }) }}
+                {{ form_label(registrationForm.dateOfBirth) }}
+            </div>
 
-			<div class="col-sm-6 form-group">
-				{{ form_widget(registrationForm.gender , {
-		"attr" : {
-			"class" : "register-input"
-		}
-	  }) }}
-	  <div>
-				{{ form_label(registrationForm.gender) }}
-				</div>
-			</div>
+            <div class="col-sm-6 form-group">
+                <div class="gender-input">
+                    {% for child in registrationForm.gender.children %}
 
-			<div class="col-sm-6 form-group">
-				{{ form_widget(registrationForm.address.municipality , {
-		"attr" : {
-			"class" : "register-input"
-		}
-	  }) }}
-				{{ form_label(registrationForm.address.municipality) }}
-			</div>
-
-			<div class="col-sm-6 form-group">
-				{{ form_widget(registrationForm.address.department , {
-		"attr" : {
-			"class" : "register-input"
-		}
-	  }) }}
-				{{ form_label(registrationForm.address.department) }}
-			</div>
-
-			<div class="col-sm-6 form-group">
-				{{ form_widget(registrationForm.address.region , {
-		"attr" : {
-			"class" : "register-input"
-		}
-	  }) }}
-				{{ form_label(registrationForm.address.region) }}
-			</div>
-
-			<div class="col-sm-6 form-group">
-				{{ form_widget(registrationForm.address.path , {
-		"attr" : {
-			"class" : "register-input"
-		}
-	  }) }}
-				{{ form_label(registrationForm.address.path) }}
-			</div>
-
-			<div class="col-sm-6 form-group">
-				{{ form_widget(registrationForm.address.buildingNumber , {
-		"attr" : {
-			"class" : "register-input"
-		}
-	  }) }}
-				{{ form_label(registrationForm.address.buildingNumber) }}
-			</div>
-
-			<div class="col-sm-6 form-group">
-				{{ form_widget(registrationForm.address.postCode , {
-		"attr" : {
-			"class" : "register-input"
-		}
-	  }) }}
-				{{ form_label(registrationForm.address.postCode) }}
-			</div>
-
-			<div class="agreeTerms mx-auto my-5">
-				{{ form_row(registrationForm.agreeTerms) }}
-			</div>
+                        <span>{{ form_widget(child) }}
+						<label class="position-static">{{ child.vars.label }}</label>
+					</span>
 
 
-			<div class="col-sm-12 form-group mb-0">
-				<a class="btn btn-primary mx-auto d-block position-relative" type="submit">
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-					Submit</a>
-			</div>
+                    {% endfor %}
+                </div>
+                <div>
 
-		</div>
-		{{ form_end(registrationForm) }}
+                    {{ form_label(registrationForm.gender) }}
+                </div>
+            </div>
 
-	</div>
+            <div class="col-sm-6 form-group">
+                {{ form_widget(registrationForm.address.municipality , {
+                    "attr" : {
+                        "class" : "register-input"
+                    }
+                }) }}
+                {{ form_label(registrationForm.address.municipality) }}
+            </div>
+
+            <div class="col-sm-6 form-group">
+                {{ form_widget(registrationForm.address.department , {
+                    "attr" : {
+                        "class" : "register-input"
+                    }
+                }) }}
+                {{ form_label(registrationForm.address.department) }}
+            </div>
+
+            <div class="col-sm-6 form-group">
+                {{ form_widget(registrationForm.address.region , {
+                    "attr" : {
+                        "class" : "register-input"
+                    }
+                }) }}
+                {{ form_label(registrationForm.address.region) }}
+            </div>
+
+            <div class="col-sm-6 form-group">
+                {{ form_widget(registrationForm.address.path , {
+                    "attr" : {
+                        "class" : "register-input"
+                    }
+                }) }}
+                {{ form_label(registrationForm.address.path) }}
+            </div>
+
+            <div class="col-sm-6 form-group">
+                {{ form_widget(registrationForm.address.buildingNumber , {
+                    "attr" : {
+                        "class" : "register-input"
+                    }
+                }) }}
+                {{ form_label(registrationForm.address.buildingNumber) }}
+            </div>
+
+            <div class="col-sm-6 form-group">
+                {{ form_widget(registrationForm.address.postCode , {
+                    "attr" : {
+                        "class" : "register-input"
+                    }
+                }) }}
+                {{ form_label(registrationForm.address.postCode) }}
+            </div>
+
+            <div class="agreeTerms mx-auto my-5">
+
+                {{ form_widget(registrationForm.agreeTerms , {
+                    "attr" : {
+                        "class" : "mx-2"
+                    }
+                }) }}
+                {{ form_label(registrationForm.agreeTerms) }}
+            </div>
+
+
+            <div class="col-sm-12 form-group mb-0">
+                <a class="btn btn-primary mx-auto d-block position-relative" type="submit">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Submit</a>
+            </div>
+
+        </div>
+        {{ form_end(registrationForm) }}
+
+    </div>
 
 
 
