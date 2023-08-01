@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\NftRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: NftRepository::class)]
@@ -18,36 +19,35 @@ class Nft
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column]
-    private ?int $quantityAvailable = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'nft')]
-    private Collection $users;
-
-    #[ORM\ManyToMany(targetEntity: SubCategory::class, inversedBy: 'nfts')]
+    #[ORM\ManyToMany(targetEntity: SubCategory::class, inversedBy: 'nfts' ,cascade: ['persist'])]
     private Collection $subCategory;
 
-    #[ORM\ManyToOne(inversedBy: 'nfts')]
+    #[ORM\ManyToOne(inversedBy: 'nfts' ,cascade: ['persist', 'remove'])]
     private ?Image $image = null;
 
-    #[ORM\ManyToOne(inversedBy: 'nfts')]
+    #[ORM\ManyToOne(inversedBy: 'nfts' ,cascade: ['persist', 'remove'])]
     private ?Video $video = null;
 
-    #[ORM\ManyToOne(inversedBy: 'nfts')]
+    #[ORM\ManyToOne(inversedBy: 'nfts' ,cascade: ['persist', 'remove'])]
     private ?Audio $audio = null;
 
-    #[ORM\ManyToOne(inversedBy: 'nfts')]
-    private ?Eth $price = null;
 
     #[ORM\ManyToMany(targetEntity: Transaction::class, mappedBy: 'nfts')]
     private Collection $transactions;
 
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    private ?string $price = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'nfts' ,cascade: ["persist"])]
+    private Collection $users;
+
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
         $this->subCategory = new ArrayCollection();
         $this->transactions = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,44 +67,6 @@ class Nft
         return $this;
     }
 
-    public function getQuantityAvailable(): ?int
-    {
-        return $this->quantityAvailable;
-    }
-
-    public function setQuantityAvailable(int $quantityAvailable): static
-    {
-        $this->quantityAvailable = $quantityAvailable;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): static
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addNft($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeNft($this);
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, SubCategory>
@@ -166,17 +128,6 @@ class Nft
         return $this;
     }
 
-    public function getPrice(): ?Eth
-    {
-        return $this->price;
-    }
-
-    public function setPrice(?Eth $price): static
-    {
-        $this->price = $price;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Transaction>
@@ -207,6 +158,45 @@ class Nft
 
     public function __toString():string{
         return $this->getName();
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(string $price): static
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addNft($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeNft($this);
+        }
+
+        return $this;
     }
 
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -44,6 +46,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateOfBirth = null;
+
+    #[ORM\ManyToMany(targetEntity: Nft::class, inversedBy: 'users')]
+    private Collection $nfts;
+
+    public function __construct()
+    {
+        $this->nfts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -178,5 +188,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     
     public function __toString():string{
         return $this->getFirstName();
+    }
+
+    /**
+     * @return Collection<int, Nft>
+     */
+    public function getNfts(): Collection
+    {
+        return $this->nfts;
+    }
+
+    public function addNft(Nft $nft): static
+    {
+        if (!$this->nfts->contains($nft)) {
+            $this->nfts->add($nft);
+        }
+
+        return $this;
+    }
+
+    public function removeNft(Nft $nft): static
+    {
+        $this->nfts->removeElement($nft);
+
+        return $this;
     }
 }

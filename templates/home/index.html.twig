@@ -5,6 +5,7 @@
 
 {% block body %}
     <div class="m-auto my-5" style="width:fit-content;text-align: center">
+        <h2>ETH Price Today is : {{ prix }} €</h2>
         {% if(app.user) %}
             <h1>Welcome To Home Page</h1>
             {% if not is_granted('ROLE_ADMIN') %}

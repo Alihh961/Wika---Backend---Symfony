@@ -33,8 +33,8 @@ class GetEthRateCommand extends Command
     {
         $response = $this->httpClient->request("GET" , "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=EUR");
         $currentPrice = $response->getContent();
-
-        $output->writeln($currentPrice);
+        $currentPrice = json_decode($currentPrice)->EUR;
+        $output->writeln("ETH Price Today is : " .$currentPrice. "€");
 
 
         return Command::SUCCESS;

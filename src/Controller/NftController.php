@@ -2,17 +2,33 @@
 
 namespace App\Controller;
 
+use App\Entity\Audio;
+use App\Entity\Image;
 use App\Entity\Nft;
+use App\Entity\Video;
 use App\Form\NftType;
 use App\Repository\NftRepository;
+use App\Repository\UserRepository;
+use App\Service\CreateMediaService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/admin/nft')]
 class NftController extends AbstractController
 {
+
+
+    public function __construct(
+        private CreateMediaService $createMediaService
+    )
+    {
+    }
+
     #[Route('/', name: 'app_nft_index', methods: ['GET'])]
     public function index(NftRepository $nftRepository): Response
     {
@@ -22,14 +38,41 @@ class NftController extends AbstractController
     }
 
     #[Route('/new', name: 'app_nft_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, NftRepository $nftRepository): Response
+    public function new(Request $request, NftRepository $nftRepository, SluggerInterface $slugger, UserRepository $userRepository): Response
     {
         $nft = new Nft();
+
         $form = $this->createForm(NftType::class, $nft);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $file */
+            $file = $form->get("file")->getData();
+            if ($file) {
+
+                $mediaEntity = $this->createMediaService->createMediaFromUploadFile($file, $form->get('description')->getData());
+                $reflectionClass = new \ReflectionClass($mediaEntity);
+
+
+                if ($reflectionClass->getName() === Image::class) {
+                    $nft->setImage($mediaEntity);
+                } else if ($reflectionClass->getName() === Video::class) {
+                    $nft->setVideo($mediaEntity);
+                } else if ($reflectionClass->getName() === Audio::class) {
+                    $nft->setAudio($mediaEntity);
+                }
+            }
+
+
             $nftRepository->save($nft, true);
+
+            //TODO change this
+            $users = $nft->getUsers();
+            foreach ($users as $user) {
+                $user->addNft($nft);
+                $userRepository->save($user, true);
+            }
+
 
             return $this->redirectToRoute('app_nft_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -69,7 +112,7 @@ class NftController extends AbstractController
     #[Route('/{id}', name: 'app_nft_delete', methods: ['POST'])]
     public function delete(Request $request, Nft $nft, NftRepository $nftRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$nft->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $nft->getId(), $request->request->get('_token'))) {
             $nftRepository->remove($nft, true);
         }
 
