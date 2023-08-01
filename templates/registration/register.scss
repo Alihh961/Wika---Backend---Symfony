@@ -1,6 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
-$buttonColor: #03e9f4;
-$white: white;
+@import "../../assets/styles/variable";
+
 
 body {
   background: rgb(20, 30, 48);
@@ -11,7 +11,7 @@ body {
   }
 
   .registration-form {
-    background: rgba(0, 0, 0, 0.5);
+    background: $formBgColor;
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
     border-radius: 10px;
     color: white;
@@ -48,7 +48,6 @@ body {
       }
       .position-label{
         left: 55%!important;
-        // color: $green;
       }
 
       .register-input {
@@ -56,7 +55,7 @@ body {
         border: none;
         border-bottom: 1px solid white;
         border-radius: 0;
-        background: transparent;
+        background-color: $inputBgColor;
         color: white;
         width: 100%;
         height: 30px;
@@ -70,7 +69,7 @@ body {
         &:focus ~ label {
           top: -68%;
           left: 6%;
-          color: $green;
+          color: $labelColor;
           font-size: 14px;
         }
       }
@@ -80,9 +79,10 @@ body {
       width: fit-content;
     }
 
-    a {
+    button {
       overflow: hidden;
       color: $buttonColor;
+      background: transparent;
       width: fit-content;
       border: none;
 

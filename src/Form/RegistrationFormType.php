@@ -66,7 +66,6 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add("address", AddressType::class)
-            // ->add('roles')
 
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,

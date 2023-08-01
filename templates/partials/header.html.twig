@@ -1,47 +1,99 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="{{path('app_home')}}"><img src="{{ asset('build/images/WIKA_Logo.png') }}" width="75px"></a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse d-flex justify-content-between mx-5" id="navbarNavDropdown">
-			<ul class="navbar-nav">
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="{{path('app_home')}}">Home</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Features</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Pricing</a>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Media
-					</a>
-					<ul class="dropdown-menu">
-						<li>
-							<a class="dropdown-item" href="#">Action</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#">Another action</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#">Something else here</a>
-						</li>
-					</ul>
-				</li>
-			</ul>
-			<div>
-				{% if app.user %}
-					<a class="btn btn-primary" href="{{path('app_logout')}}">Logout</a>
-				{% else %}
+    <nav class="navbar navbar-expand-lg bg-body-tertiary position-fixed w-100 top-0 p-3 header">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ path('app_home') }}"><img
+                        src="{{ asset('build/images/WIKA_Logo.png') }}"
+                        width="75px"></a>
 
-					<a class="btn btn-primary" href="{{path('app_login')}}">Login</a>
+                {% if is_granted("ROLE_ADMIN") %}
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                All Users
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_user_new') }}">Add new User</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_user_index') }}">Show All User</a>
+                                </li>
+                            </ul>
 
-					<a class="btn btn-register" href="{{path('app_register')}}">Register</a>
-				{% endif %}
-			</div>
-		</div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                All Nfts
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_nft_new') }}">Add new Nfts</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_nft_index') }}">Show All Nfts</a>
+                                </li>
+                            </ul>
 
-	</nav>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                All Medias
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_image_new') }}">Add A New Image</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_image_index') }}">Show All
+                                        Images</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_audio_new') }}">Add A New Audio</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_audio_index') }}">Show All
+                                        Audios</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_video_new') }}">Add A New Video</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_video_index') }}">Show All
+                                        Videos</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="">Show All Medias</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                {% endif %}
+
+                <div>
+                    {% if(app.user) %}
+                        <a class="btn btn-primary" href="{{ path('app_logout') }}">Logout</a>
+                    {% endif %}
+
+                    <a class="btn btn-primary" href="{{ path('app_login') }}">Login</a>
+
+                    <a class="btn btn-register" href="{{ path('app_register') }}">Register</a>
+
+                </div>
+            </div>
+
+    </nav>
+

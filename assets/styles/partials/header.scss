@@ -1,5 +1,10 @@
 @import "~bootstrap/scss/bootstrap";
 
+.header{
+    background-color: #FEFEDF!important;
+    z-index: 100;
+}
+
 .btn-register{
     background-color: $green!important;
     color: white!important;

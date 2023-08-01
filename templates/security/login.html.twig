@@ -3,57 +3,47 @@
 {% block title %}Log in!
 {% endblock %}
 {% block stylesheets %}
-	{{ parent() }}
-	{{ encore_entry_link_tags('login') }}
+    {{ parent() }}
+    {{ encore_entry_link_tags('login') }}
 
 
 {% endblock %}
 
 {% block body %}
-	<div class="row">
-		<form method="post" class="py-5 col-lg-6 col-md-8 col-sm-10 col-10 text-center login-form">
-			{% if error %}
-				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-			{% endif %}
+    <div class="row">
+        <form method="post" class="py-5 col-lg-6 col-md-8 col-sm-10 col-10 text-center login-form">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-			{% if app.user %}
-				<div class="mb-3">
-					You are logged in as
-					{{ app.user.userIdentifier }},
-					<a href="{{ path('app_logout') }}">Logout</a>
-				</div>
-			{% endif %}
+            <h1 class="h3 mb-3 font-weight-normal m-auto">Sign-In Form</h1>
+            <div class="w-50 mx-auto my-5 position-relative email-box">
+                <input type="email" name="email" class=" login-input" required>
+                <label for="inputEmail" class="my-3 position-absolute">Email</label>
+            </div>
+            <div class="w-50 mx-auto my-5 position-relative password-box">
+                <input type="password" name="password" class="login-input" required>
+                <label for="inputPassword" class="my-3 position-absolute">Password</label>
+            </div>
+            <input
+                    type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-			<h1 class="h3 mb-3 font-weight-normal m-auto">Sign-In Form</h1>
-			<div class="w-50 mx-auto my-5 position-relative email-box">
-				<input type="email" name="email" class=" login-input" required>
-				<label for="inputEmail" class="my-3 position-absolute">Email</label>
-			</div>
-			<div class="w-50 mx-auto my-5 position-relative password-box">
-				<input type="password" name="password" class="login-input" required>
-				<label for="inputPassword" class="my-3 position-absolute">Password</label>
-			</div>
-			<input
-			type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-			{#
-									        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-									        See https://symfony.com/doc/current/security/remember_me.html
-									
-									        <div class="checkbox mb-3">
-									            <label>
-									                <input type="checkbox" name="_remember_me"> Remember me
-									            </label>
-									        </div>
-									    #}
 
-			<a class="btn btn-lg position-relative" type="submit">
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				Sign in
-			</a>
-		</form>
-	</div>
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me"> Remember me
+                </label>
+            </div>
+
+
+            <button class="btn btn-lg position-relative" type="submit">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Sign in
+            </button>
+        </form>
+    </div>
 {% endblock %}
