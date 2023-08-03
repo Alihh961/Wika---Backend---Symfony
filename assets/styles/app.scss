@@ -1,13 +1,35 @@
 @import "~bootstrap/scss/bootstrap";
+@import "/assets/styles/partials/buttons";
+@import "/assets/styles/partials/tables";
 
-html{
-    height: 100%!important;
+
+
+@font-face {
+  font-family: Montserrat;
+  src: url("/assets/styles/fonts/Montserrat/static/Montserrat-Regular.ttf");
 }
+
+html {
+  height: 100% !important;
+}
+
 body {
-    background-color: lightgray;
-    box-sizing: border-box;
-    overflow-x: hidden;
-    padding: 0;
-    margin: 0;
-    height: 100%!important;
+  background-color: lightgray;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+  height: 100% !important;
 }
+
+* {
+  font-family: Montserrat, sans-serif !important;
+}
+
+
+.w-fit{
+  width: fit-content!important;
+}
+
+
+

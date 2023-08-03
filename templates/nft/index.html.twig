@@ -3,9 +3,9 @@
 {% block title %}Nft index{% endblock %}
 
 {% block body %}
-    <h1>Nft index</h1>
+    <h1 class="mx-auto my-5 w-fit">Nft index</h1>
 
-    <table class="table">
+    <table class="rwd-table my-5 show">
         <thead>
             <tr>
                 <th>Id</th>
@@ -17,10 +17,10 @@
         {% for nft in nfts %}
             <tr>
                 <td>{{ nft.id }}</td>
-                <td>{{ nft.name }}</td>
-                <td>
-                    <a href="{{ path('app_nft_show', {'id': nft.id}) }}">show</a>
-                    <a href="{{ path('app_nft_edit', {'id': nft.id}) }}">edit</a>
+                <td>{{ nft.image.name }}</td>
+                <td class="d-flex justify-content-evenly align-items-center">
+                    <a href="{{ path('app_nft_show', {'id': nft.id}) }}" class="btn-warning btn">show</a>
+                    <a href="{{ path('app_nft_edit', {'id': nft.id}) }}" class="custom-btn-edit">edit</a>
                 </td>
             </tr>
         {% else %}

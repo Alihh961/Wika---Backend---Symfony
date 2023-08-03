@@ -29,6 +29,7 @@ class NftType extends AbstractType
         $builder
             ->add('name' , TextType::class , [
                 "required"=>true ,
+                "mapped"=>false
             ])
             ->add('users' , EntityType::class , [
                 "class" => User::class,

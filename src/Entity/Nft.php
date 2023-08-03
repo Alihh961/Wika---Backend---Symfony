@@ -16,10 +16,6 @@ class Nft
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
-
-
     #[ORM\ManyToMany(targetEntity: SubCategory::class, inversedBy: 'nfts' ,cascade: ['persist'])]
     private Collection $subCategory;
 
@@ -55,17 +51,7 @@ class Nft
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
 
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
 
 
     /**
@@ -157,7 +143,7 @@ class Nft
     }
 
     public function __toString():string{
-        return $this->getName();
+        return "tetetette";
     }
 
     public function getPrice(): ?string

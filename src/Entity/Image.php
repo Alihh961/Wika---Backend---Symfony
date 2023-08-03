@@ -17,7 +17,7 @@ class Image extends Media
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'image', targetEntity: Nft::class)]
+    #[ORM\OneToMany(mappedBy: 'image', targetEntity: Nft::class ,cascade: ["remove"])]
     private Collection $nfts;
 
     public function __construct()

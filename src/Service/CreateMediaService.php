@@ -21,11 +21,11 @@ class CreateMediaService
     {
     }
 
-    public function createMediaFromUploadFile(UploadedFile $uploadedFile, string $description): Video|Image|Audio
+    public function createMediaFromUploadFile(UploadedFile $uploadedFile, string $description , string $name): Video|Image|Audio
     {
 
         $uploadDirectory = $this->parameterBag->get('upload_file');
-
+        $size = $uploadedFile->getSize(); // in bytes , divid by 10^6 to have the size in megabytes
         $mimeType = $uploadedFile->getMimeType(); // mimeType contains ext of file and its type(image , video , audio ,...)
         $fileType = explode("/", $mimeType)["0"];
         $ext = explode("/", $mimeType)["1"];
@@ -55,8 +55,8 @@ class CreateMediaService
         $mediaEntity->setFormat($ext);
         $mediaEntity->setUrl($newFileName);
         $mediaEntity->setDescription($description);
-        $mediaEntity->setSize(1);
-        $mediaEntity->setName('toto');
+        $mediaEntity->setSize($size);
+        $mediaEntity->setName($name);
 
 
         return $mediaEntity;
