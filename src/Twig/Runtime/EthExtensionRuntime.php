@@ -9,7 +9,6 @@ use Twig\Extension\RuntimeExtensionInterface;
 class EthExtensionRuntime implements RuntimeExtensionInterface
 {
     public function __construct(
-        private EthRepository $ethRepository
     )
     {
         // Inject dependencies if needed
