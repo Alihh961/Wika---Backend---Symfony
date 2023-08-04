@@ -1,6 +1,8 @@
 @import "~bootstrap/scss/bootstrap";
 @import "/assets/styles/partials/buttons";
 @import "/assets/styles/partials/tables";
+@import "/assets/styles/partials/forms";
+@import "/assets/styles/partials/pagination";
 
 
 
@@ -14,12 +16,14 @@ html {
 }
 
 body {
-  background-color: lightgray;
+  background-color: #cbe0dd;
   box-sizing: border-box;
   overflow-x: hidden;
   padding: 0;
   margin: 0;
-  height: 100% !important;
+  display: flex;
+  flex-direction: column;
+
 }
 
 * {
@@ -29,6 +33,15 @@ body {
 
 .w-fit{
   width: fit-content!important;
+}
+
+.white{
+  color: white;
+}
+
+.section{
+  background-color: #13101E;
+  min-height: 100vh;
 }
 
 

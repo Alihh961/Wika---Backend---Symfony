@@ -1,0 +1,112 @@
+@import "../variable";
+
+.custom-form {
+  padding: 35px;
+  //color: white;
+  //background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%), radial-gradient(at top center, rgba(255, 255, 255, 0.40) 0%, rgba(0, 0, 0, 0.40) 120%) #989898;
+  background-blend-mode: multiply, multiply;
+  border-radius: 10px;
+}
+  .edit-form-input {
+    &:focus {
+      outline: none;
+    }
+  }
+
+.bg-image{
+  background-image:url("//bestnft.today/wp-content/uploads/2023/02/monterajpg08.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  height: 100%;
+  width: 100%;
+}
+
+
+// Registration Form
+
+.form-container{
+  min-height: 100vh;
+}
+
+.registration-form {
+  background: $formBgColor;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  color: white;
+  padding: 20px 35px;
+  position: absolute;
+  top: 205px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 100px;
+  margin-bottom: 100px;
+
+  .form-group {
+    position: relative;
+    margin: 15px 0px !important;
+
+    .gender-input{
+
+      border-bottom: solid white;
+      padding: 10px 10px 10px 6%;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+    }
+
+    label {
+      font-weight: 600;
+      position: absolute;
+      color: white;
+      top: 18%;
+      left: 8%;
+      transition: 0.5s;
+    }
+    .position-label{
+      left: 55%!important;
+    }
+
+    .register-input {
+      outline: 0;
+      border: none;
+      border-bottom: 1px solid white;
+      border-radius: 0;
+      background-color: $inputBgColor;
+      color: white;
+      width: 100%;
+      height: 30px;
+      padding: 10px 10px;
+
+      &[type='date']{
+        color-scheme: dark;
+        padding-left: 6%;
+      }
+
+      &:focus ~ label {
+        top: -68%;
+        left: 6%;
+        color: $labelColor;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .agreeTerms {
+    width: fit-content;
+  }
+
+}
+
+
+.translate ~ label {
+  top: -68% !important;
+  left: 6% !important;
+  font-size: 14px !important;
+  color: $green !important;
+  font-weight: bold !important;
+}
+
+

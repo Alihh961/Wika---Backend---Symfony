@@ -18,11 +18,6 @@ class EditNftFormType extends AbstractType
             ->add('price', NumberType::class, [
                 "label"=>"Nft Price",
                 "required"=>true,
-                "constraints"=>[
-                    new Blank([
-                        "message"=>"Can't be Empty!"
-                    ])
-                ]
             ])
             ->add('description', TextareaType::class, [
                 "label"=>"Image Description"

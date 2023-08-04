@@ -3,6 +3,8 @@
 {% block title %}New Nft{% endblock %}
 
 {% block body %}
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
+
     {{ form_start(form , {
         "attr" : {
             "class" : "w-50 m-auto d-flex flex-column gap-3 align-items-center   "
@@ -28,5 +30,5 @@
     {{ form_end(form) }}
 
 
-    <a href="{{ path('app_nft_index') }}">back to list</a>
+    <a href="{{ path('app_nft_index') }}" class="custom-btn-back-to-list m-auto">back to list</a>
 {% endblock %}

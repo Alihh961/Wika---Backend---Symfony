@@ -15,24 +15,54 @@ import "./bootstrap";
 
 let inputs = [document.querySelectorAll(".login-input"), document.querySelectorAll(".register-input")];
 
-for(let i = 0 ; i<inputs.length ; i++){
+for (let i = 0; i < inputs.length; i++) {
 
-inputs[i].forEach((input) => {
-  input.addEventListener("focusout", () => {
-    console.log(input.value);
+    inputs[i].forEach((input) => {
+        input.addEventListener("focusout", () => {
+            console.log(input.value);
 
-    if (input.value != "") {
-      // if(input.classList.contains("date-input")){
-        
-      // }
-      
-      input.classList.add("translate");
-    } else {
-      input.classList.remove("translate");
-    }
-  });
-});
+            if (input.value != "") {
+                // if(input.classList.contains("date-input")){
+
+                // }
+
+                input.classList.add("translate");
+            } else {
+                input.classList.remove("translate");
+            }
+        });
+    });
 
 }
 
 console.log("works");
+
+// Controlling the borders of the first and last child of pagination .
+const paginationDiv = document.querySelector('.pagination');
+const paginationLength = paginationDiv.children.length; // number of pagination children
+
+function addBorders() {
+    // the current page element is an html element <span> while the others will be <span> with a child html element
+    // <a> so we check if the current page is number 1 we add the class of borders to the span element  while
+    // if it is not the first then we will access to the html element <a> of the first <span> of the pagination and
+    // we add the class to it , we do the same for the last element;
+
+    if (paginationDiv.children[0].classList.contains("current")) {
+        paginationDiv.children[0].classList.add("first-pagination");
+
+    } else {
+        const a = paginationDiv.children[0].querySelector("a");
+        a.classList.add('first-pagination');
+    }
+    if (paginationDiv.children[paginationLength - 1].classList.contains("current")) {
+        paginationDiv.children[paginationLength - 1].classList.add("last-pagination");
+
+    } else {
+        const a = paginationDiv.children[paginationLength - 1].querySelector("a");
+        a.classList.add("last-pagination");
+
+    }
+}
+
+addBorders();
+

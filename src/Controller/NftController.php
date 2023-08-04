@@ -12,8 +12,8 @@ use App\Repository\ImageRepository;
 use App\Repository\NftRepository;
 use App\Repository\UserRepository;
 use App\Service\CreateMediaService;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,16 +26,24 @@ class NftController extends AbstractController
 
 
     public function __construct(
-        private CreateMediaService $createMediaService
+        private CreateMediaService $createMediaService,
+        private PaginatorInterface $paginator
     )
     {
     }
 
     #[Route('/', name: 'app_nft_index', methods: ['GET'])]
-    public function index(NftRepository $nftRepository): Response
+    public function index(NftRepository $nftRepository , Request $request): Response
     {
+        $nfts = $nftRepository->findAll();
+        $pagination = $this->paginator->paginate(
+            $nfts,
+            $request->query->getInt("page",1),
+            7
+        );
+
         return $this->render('nft/index.html.twig', [
-            'nfts' => $nftRepository->findAll(),
+            'nfts' => $pagination,
         ]);
     }
 
@@ -103,8 +111,6 @@ class NftController extends AbstractController
 
         $form = $this->createForm(EditNftFormType::class);
         $form->handleRequest($request);
-
-
 
 
 

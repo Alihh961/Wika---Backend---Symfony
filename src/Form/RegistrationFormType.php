@@ -22,9 +22,11 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('firstName', TextType::class, [
+                "autocomplete"=>false,
                 "constraints" => new Regex([
                     "pattern" => "/^[a-zA-Z]{2,}$/",
                     "message" => "At least two letters, only letters are allowed"
+
                 ])
             ])
             ->add('lastName' , TextType::class , [

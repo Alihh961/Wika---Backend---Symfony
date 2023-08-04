@@ -1,0 +1,34 @@
+.pagination {
+
+  .page a, .current, .next a, .last a, .previous a, .first a {
+    position: relative;
+    display: block;
+    padding: var(--bs-pagination-padding-y) var(--bs-pagination-padding-x);
+    font-size: var(--bs-pagination-font-size);
+    color: var(--bs-pagination-color);
+    text-decoration: none;
+    background-color: var(--bs-pagination-bg);
+    border: var(--bs-pagination-border-width) solid var(--bs-pagination-border-color);
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+  .current {
+    background-color: #23adad;
+    color: white;
+  }
+}
+
+.first-pagination {
+
+  border-top-left-radius: 11px;
+  border-bottom-left-radius: 11px;
+
+}
+
+.last-pagination {
+
+  border-top-right-radius: 11px;
+  border-bottom-right-radius: 11px;
+}
+
+

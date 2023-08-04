@@ -4,7 +4,8 @@
 {% endblock %}
 
 {% block body %}
-    <div class="m-auto my-5" style="width:fit-content;text-align: center">
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
+    <div class="m-auto my-5 w-fit text-center position-relative">
         <h2>ETH Price Today is : {{ prix }} €</h2>
         {% if(app.user) %}
             <h1>Welcome To Home Page</h1>
