@@ -27,10 +27,12 @@ class UserController extends AbstractController
     {
 
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(RegistrationFormType::class,$user);
         $form->handleRequest($request);
+        $user->setPassword($form->get("plainPassword")->getData());
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
@@ -53,10 +55,12 @@ class UserController extends AbstractController
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserRepository $userRepository): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+        dd($user);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dd($user);
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
@@ -64,7 +68,7 @@ class UserController extends AbstractController
 
         return $this->renderForm('user/edit.html.twig', [
             'user' => $user,
-            'form' => $form,
+            'registrationForm' => $form,
         ]);
     }
 

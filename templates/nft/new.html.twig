@@ -7,7 +7,7 @@
 
     {{ form_start(form , {
         "attr" : {
-            "class" : "w-50 m-auto d-flex flex-column gap-3 align-items-center   "
+            "class" : "w-50 m-auto d-flex flex-column gap-3 align-items-center position-relative"
         }
     }) }}
     <h1 class="">Create new Nft</h1>
@@ -23,6 +23,9 @@
 
     {{ form_label(form.price) }}
     {{ form_widget(form.price) }}
+
+    {{ form_label(form.description) }}
+    {{ form_widget(form.description) }}
 
     {{ form_row(form.file) }}
 
