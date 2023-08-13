@@ -13,27 +13,63 @@ import "./bootstrap";
 
 // Sign-in Form
 
-let inputs = [document.querySelectorAll(".login-input"), document.querySelectorAll(".register-input")];
 
-for (let i = 0; i < inputs.length; i++) {
+function checkInputValues() { // Translate the label when focusing in and out in the input
 
-    inputs[i].forEach((input) => {
-        input.addEventListener("focusout", () => {
-            console.log(input.value);
+    let inputs = [document.querySelectorAll(".login-input"), document.querySelectorAll(".register-input")];
+
+    for (let i = 0; i < inputs.length; i++) {
+
+        inputs[i].forEach((input) => {
+            input.addEventListener("focusout", () => {
+                console.log(input.value);
+
+                if (input.value != "") {
+                    if (input.classList.contains("special-input")) {
+                        input.classList.add("special-translate");
+                        ;
+                    } else {
+                        input.classList.add("translate");
+                    }
+
+
+                } else {
+                    input.classList.remove("translate");
+                }
+            });
+        });
+
+    }
+
+};
+
+function checkInputValuesOnLoad() { // check if the input have a value on load , translate the label
+
+    let inputs = [document.querySelectorAll(".login-input"), document.querySelectorAll(".register-input")];
+
+    for (let i = 0; i < inputs.length; i++) {
+
+        inputs[i].forEach((input) => {
 
             if (input.value != "") {
-                // if(input.classList.contains("date-input")){
+                if (input.classList.contains("special-input")) {
+                    input.classList.add("special-translate");
+                    ;
+                } else {
+                    input.classList.add("translate");
+                }
 
-                // }
-
-                input.classList.add("translate");
             } else {
                 input.classList.remove("translate");
             }
         });
-    });
 
-}
+    }
+
+};
+checkInputValues();
+checkInputValuesOnLoad();
+
 
 console.log("works");
 

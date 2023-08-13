@@ -57,19 +57,29 @@
 
     }
 
-    label {
+    label:not(.special-label) {
       font-weight: 600;
       position: absolute;
       color: white;
-      top: 18%;
+      top: 12%;
       left: 8%;
+      transition: 0.5s;
+    }
+
+    label.special-label{
+      font-weight: 600;
+      position: absolute;
+      color: white;
+      top: 12%;
+      left: 45%;
       transition: 0.5s;
     }
     .position-label{
       left: 55%!important;
     }
 
-    .register-input {
+
+    .register-input{
       outline: 0;
       border: none;
       border-bottom: 1px solid white;
@@ -92,6 +102,17 @@
         font-size: 14px;
       }
     }
+    .register-input.special-input{
+      width: 33.33%;
+
+      &:focus ~ label {
+        top: -68%;
+        left: 36%;
+        color: $labelColor;
+        font-size: 14px;
+      }
+    }
+
   }
 
   .agreeTerms {
@@ -107,6 +128,15 @@
   font-size: 14px !important;
   color: $green !important;
   font-weight: bold !important;
+}
+
+.special-translate ~ label {
+  top: -68% !important;
+  left: 37% !important;
+  font-size: 14px !important;
+  color: $green !important;
+  font-weight: bold !important;
+
 }
 
 

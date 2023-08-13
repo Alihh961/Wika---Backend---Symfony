@@ -3,11 +3,11 @@
 {% block title %}Edit User{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+    <h1 class="w-fit mx-auto my-5">Edit User</h1>
 
     <div class="container mt-3 form-container position-relative update-user-form">
-        {{ form_errors(registrationForm) }}
-        {{ form_start(registrationForm , {
+        {{ form_errors(userForm) }}
+        {{ form_start(userForm , {
             "attr" : {
                 "class" : "w-75 registration-form"
             }
@@ -17,46 +17,46 @@
 
             <div class="col-sm-6 form-group">
 
-                {{ form_widget(registrationForm.firstName , {
+                {{ form_widget(userForm.firstName , {
                     "attr" : {
                         "class" : "register-input"
                     }
                 }) }}
-                {{ form_label(registrationForm.firstName) }}
+                {{ form_label(userForm.firstName) }}
 
             </div>
 
             <div class="col-sm-6 form-group">
-                {{ form_widget(registrationForm.lastName , {
+                {{ form_widget(userForm.lastName , {
                     "attr" : {
                         "class" : "register-input"
                     }
                 }) }}
-                {{ form_label(registrationForm.lastName) }}
+                {{ form_label(userForm.lastName) }}
             </div>
 
             <div class="col-sm-6 form-group">
-                {{ form_widget(registrationForm.email , {
+                {{ form_widget(userForm.email , {
                     "attr" : {
                         "class" : "register-input"
                     }
                 }) }}
-                {{ form_label(registrationForm.email) }}
+                {{ form_label(userForm.email) }}
             </div>
 
 
             <div class="col-sm-6 form-group">
-                {{ form_widget(registrationForm.dateOfBirth , {
+                {{ form_widget(userForm.dateOfBirth , {
                     "attr" : {
                         "class" : "register-input"
                     }
                 }) }}
-                {{ form_label(registrationForm.dateOfBirth) }}
+                {{ form_label(userForm.dateOfBirth) }}
             </div>
 
             <div class="col-sm-6 form-group">
                 <div class="gender-input">
-                    {% for child in registrationForm.gender.children %}
+                    {% for child in userForm.gender.children %}
 
                         <span>{{ form_widget(child) }}
 						<label class="position-static">{{ child.vars.label }}</label>
@@ -67,72 +67,72 @@
                 </div>
                 <div>
 
-                    {{ form_label(registrationForm.gender) }}
+                    {{ form_label(userForm.gender) }}
                 </div>
             </div>
 
             <div class="col-sm-6 form-group">
-                {{ form_widget(registrationForm.address.municipality , {
+                {{ form_widget(userForm.address.municipality , {
                     "attr" : {
                         "class" : "register-input"
                     }
                 }) }}
-                {{ form_label(registrationForm.address.municipality) }}
+                {{ form_label(userForm.address.municipality) }}
             </div>
 
             <div class="col-sm-6 form-group">
-                {{ form_widget(registrationForm.address.department , {
+                {{ form_widget(userForm.address.department , {
                     "attr" : {
                         "class" : "register-input"
                     }
                 }) }}
-                {{ form_label(registrationForm.address.department) }}
+                {{ form_label(userForm.address.department) }}
             </div>
 
             <div class="col-sm-6 form-group">
-                {{ form_widget(registrationForm.address.region , {
+                {{ form_widget(userForm.address.region , {
                     "attr" : {
                         "class" : "register-input"
                     }
                 }) }}
-                {{ form_label(registrationForm.address.region) }}
+                {{ form_label(userForm.address.region) }}
             </div>
 
             <div class="col-sm-6 form-group">
-                {{ form_widget(registrationForm.address.path , {
+                {{ form_widget(userForm.address.path , {
                     "attr" : {
                         "class" : "register-input"
                     }
                 }) }}
-                {{ form_label(registrationForm.address.path) }}
+                {{ form_label(userForm.address.path) }}
             </div>
 
             <div class="col-sm-6 form-group">
-                {{ form_widget(registrationForm.address.buildingNumber , {
+                {{ form_widget(userForm.address.buildingNumber , {
                     "attr" : {
                         "class" : "register-input"
                     }
                 }) }}
-                {{ form_label(registrationForm.address.buildingNumber) }}
+                {{ form_label(userForm.address.buildingNumber) }}
             </div>
 
-            <div class="col-sm-6 form-group">
-                {{ form_widget(registrationForm.address.postCode , {
+            <div class=" col-12 form-group m-auto">
+                {{ form_widget(userForm.address.postCode , {
                     "attr" : {
-                        "class" : "register-input"
+                        "class" : "special-input register-input  m-auto d-block "
                     }
                 }) }}
-                {{ form_label(registrationForm.address.postCode) }}
+                {{ form_label(userForm.address.postCode) }}
             </div>
 
             <div class="agreeTerms mx-auto my-3 text-center">
 
-                {{ form_widget(registrationForm.agreeTerms , {
+                {{ form_widget(userForm.agreeTerms , {
                     "attr" : {
-                        "class" : "mx-2"
+                        "class" : "m-auto w-100"
                     }
                 }) }}
-                {{ form_label(registrationForm.agreeTerms) }}
+                {{ form_label(userForm.agreeTerms) }}
             </div>
 
 
@@ -146,11 +146,10 @@
 
         </div>
 
-        {{ form_end(registrationForm) }}
+        {{ form_end(userForm) }}
 
     </div>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

@@ -52,11 +52,6 @@ class RegistrationFormType extends AbstractType
                     "class" => "position-label"
                 ]
                 ,
-                "choice_attr" => [
-                    "Male" => ["class" => "toto"],
-                    "Female" => ["class" => "totdemale"]
-                ]
-                ,
                 "constraints" => [
                     new NotBlank([
                         "message" => "Gender is Required"
@@ -78,7 +73,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
+                // instead of being set into the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
@@ -93,6 +88,7 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+                "label"=>"Password"
             ]);
     }
 

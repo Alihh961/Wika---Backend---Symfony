@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Address;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +18,11 @@ class AddressType extends AbstractType
             ->add('region')
             ->add('path')
             ->add('buildingNumber')
-            ->add('postCode')
+            ->add('postCode' , NumberType::class , [
+                "label_attr"=> [
+                    "class" => "special-label"
+                ]
+            ])
         ;
     }
 
