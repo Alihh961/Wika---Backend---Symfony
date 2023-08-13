@@ -13,17 +13,8 @@ class ToStringRuntime implements RuntimeExtensionInterface
 
     public function ArrayToString(array $value)
     {
-        if (count($value) == 1) {
-            return "ROLE_USER";
-        } else {
 
+        return $value[0];
 
-            $string = "ROLE_USER";
-            for ($i = 0; $i < count($value) - 1; $i++) {
-                $string .= " , " . $value[0];
-            }
-
-            return $string;
-        }
     }
 }

@@ -5,8 +5,10 @@
   overflow: hidden;
   width: 50%;
   min-width: 300px;
+  max-width: calc(100vw - 100px);
   border: 1px solid black;
   margin: auto;
+  font-size: 12px;
 
 
   td {
@@ -24,5 +26,9 @@
     padding: 10px 15px;
     border: 1px solid #DDDDDD;
 
+  }
+
+  btn , a ,button {
+    width: 75px!important;
   }
 }

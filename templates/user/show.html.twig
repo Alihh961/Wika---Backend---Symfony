@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <th>Roles</th>
-                <td>{{ user.roles ? user.roles|StringRoles }}</td>
+                <td>{{ user.roles ? user.roles|HighestRole }}</td>
             </tr>
 
             <tr>
@@ -43,6 +43,7 @@
     <a href="{{ path('app_user_index') }}" class="custom-btn-back-to-list">Back to list</a>
 
     <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="custom-btn-edit">Edit</a>
+
     <div class="mx-auto my-3 w-fit">
         {{ include('user/_delete_form.html.twig') }}
     </div>
