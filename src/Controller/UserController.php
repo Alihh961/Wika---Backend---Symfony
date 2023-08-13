@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Form\RolesFormType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -76,10 +77,10 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        $form->get("gender")->setData($user->getGender());
 
+        dd($form->getData());
         if ($form->isSubmitted() && $form->isValid()) {
-
+        dd("ici");
 //            $this->entityManager->persist($user);
 //            $this->entityManager->flush();
             $userRepository->save($user, true);
@@ -90,6 +91,29 @@ class UserController extends AbstractController
         return $this->renderForm('user/edit.html.twig', [
             'user' => $user,
             'userForm' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/edit/roles', name: 'app_user_edit_roles', methods: ['GET', 'POST'])]
+    public function editRoles(Request $request, User $user, UserRepository $userRepository): Response
+    {
+
+        $currentRole = $user->getRoles();
+        $form = $this->createForm(RolesFormType::class ,[
+            'currentRole'=>$currentRole
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $userRepository->save($user, true);
+
+            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('user/roles_edit.html.twig', [
+            "form"=>$form,
+            "user"=>$user
         ]);
     }
 

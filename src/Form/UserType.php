@@ -42,6 +42,7 @@ class UserType extends AbstractType
             ])
             ->add('email')
             ->add('gender', ChoiceType::class, [
+//                "mapped"=> false,
                 "choices" => [
                     "Male" => "male",
                     "Female" => "female"
@@ -55,6 +56,8 @@ class UserType extends AbstractType
                 'attr' => [
                     'class' => 'toto'
                 ]
+                ,
+
             ])
             ->add("address", AddressType::class)
 
@@ -73,6 +76,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+
         ]);
     }
 }

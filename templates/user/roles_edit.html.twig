@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User Roles{% endblock %}
+
+{% block body %}
+
+<h1 class="w-fit mx-auto my-3">Edit Roles</h1>
+
+    <h3>You are editing the role of the user of email : <span style="color:red ;font-weight: bold">{{ user.email }}</span></h3>
+    <h4>His current role is : <span style="color:red" class="fw-bold">{{ user.roles|HighestRole }}</span></h4>
+
+    {{ form_start(form) }}
+    <div class="w-50 mx-auto my-5 d-flex gap-5 p-4" style="border-radius: 5px ; background: #34495E;
+  color: #fff;">
+    {% for child in form.roles.children %}
+    <div style="width:33%" class="text-center">
+        {{ form_widget(child) }}
+        {{ form_label(child) }}
+    </div>
+
+    {%  endfor %}
+    </div>
+
+    <button class="custom-btn-edit d-block mx-auto my-3" type="submit">
+
+        Submit
+    </button>
+
+    {{ form_end(form) }}
+
+{% endblock body %}

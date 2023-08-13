@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Image index</h1>
 
-    <table class="table">
+    <table class="rwd-table">
         <thead>
             <tr>
                 <th>Name</th>
@@ -27,7 +27,7 @@
                 <td>{{ image.format }}</td>
                 <td>{{ image.id }}</td>
                 <td>
-                    <a href="{{ path('app_image_show', {'id': image.id}) }}">show</a>
+                    <a href="{{ path('app_image_show', {'id': image.id}) }}" class="btn btn-light">show</a>
                 </td>
             </tr>
         {% else %}
