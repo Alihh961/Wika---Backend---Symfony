@@ -12,24 +12,28 @@ class RolesFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('roles' ,ChoiceType::class , [
-               "choices"=> [
-                   "Admin"=> "ROLE_ADMIN",
-                   "Super Admin"=>"ROLE_SUPER_ADMIN",
-                   "User" => "ROLE_USER"
-               ],
 
-                "multiple"=>true,
-                "expanded"=>true,
-            ])
-        ;
+        $currentRole = $options["currentRole"];
+
+        $builder
+            ->add('roles', ChoiceType::class, [
+                "choices" => [
+                    "Admin" => "ROLE_ADMIN",
+                    "Super Admin" => "ROLE_SUPER_ADMIN",
+                    "User" => "ROLE_USER"
+                ],
+                "multiple" => true,
+                "expanded" => true,
+                "data" => [$currentRole],
+
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             // Configure your form options here
+            "currentRole" => []
         ]);
     }
 }

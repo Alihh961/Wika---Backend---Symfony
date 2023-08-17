@@ -31,19 +31,19 @@ class NftType extends AbstractType
                 "required"=>true ,
                 "mapped"=>false
             ])
-            ->add('users' , EntityType::class , [
-                "class" => User::class,
-                "choice_label"=>function ($user){
-
-
-                    return $user->getFirstName() . " " . $user->getLastName();
-                },
-
-                'multiple' => true,
-                'expanded' => true,
-                "required"=> false ,
-
-            ])
+//            ->add('users' , EntityType::class , [
+//                "class" => User::class,
+//                "choice_label"=>function ($user){
+//
+//
+//                    return $user->getFirstName() . " " . $user->getLastName();
+//                },
+//
+//                'multiple' => true,
+//                'expanded' => true,
+//                "required"=> false ,
+//
+//            ])
             ->add('SubCategory' , EntityType::class , [
                 "class"=>SubCategory::class ,
                 "multiple"=>true

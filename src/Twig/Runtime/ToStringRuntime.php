@@ -14,7 +14,15 @@ class ToStringRuntime implements RuntimeExtensionInterface
     public function ArrayToString(array $value)
     {
 
-        return $value[0];
+            if(in_array("ROLE_SUPER_ADMIN" , $value)){
+                return "SUPER_ADMIN";
+            }else if (in_array("ROLE_ADMIN" ,$value)){
+                return "ADMIN";
+            }else{
+                return "USER";
+            }
+
+
 
     }
 }

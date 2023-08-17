@@ -2,17 +2,21 @@
 
 namespace App\Form;
 
+use DateTime;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class UserType extends AbstractType
 {
@@ -20,27 +24,38 @@ class UserType extends AbstractType
     {
         $builder
             ->add('firstName', TextType::class, [
-                "autocomplete"=>false,
+                "autocomplete" => false,
                 "constraints" => new Regex([
                     "pattern" => "/^[a-zA-Z]{2,}$/",
-                    "message" => "At least two letters, only letters are allowed"
+                    "message" => "First Name: At least two letters,only letters are allowed"
 
                 ])
             ])
-            ->add('lastName' , TextType::class , [
+            ->add('lastName', TextType::class, [
                 "constraints" => new Regex([
-                    "pattern" =>  "/^[a-zA-Z]{2,}$/",
-                    "message" => "At least two letters, only letters are allowed"
+                    "pattern" => "/^(?!.*\s{3})[a-zA-Z\s]{2,}$/",
+                    "message" => "Last Name: At least two letters, only letters are allowed last"
                 ])
             ])
-            ->add('dateOfBirth' ,DateType::class, [
-                'label_attr'=> [
+            ->add('dateOfBirth', DateType::class, [
+                'label_attr' => [
                     "class" => "position-label date-input",
                 ]
                 ,
                 'widget' => 'single_text',
+                "constraints" => [
+                    new Callback([$this, "minAge"])
+                ]
             ])
-            ->add('email')
+            ->add('email' ,EmailType::class , [
+                "constraints"=> [
+                    new Email([]),
+                    new Regex([
+                        "pattern"=>'/^[^@\t\r\n]+@[^@\t\r\n]+\.[^@\t\r\n]+$/' ,
+                        "message"=>"Email: At least 8 characters with at least one Capital letter,one Small letter,one Number and one Special Char"
+                    ])
+                ]
+            ])
             ->add('gender', ChoiceType::class, [
 //                "mapped"=> false,
                 "choices" => [
@@ -48,7 +63,7 @@ class UserType extends AbstractType
                     "Female" => "female"
                 ],
                 "label_attr" => [
-                    "class" => "position-label"
+                    "class" => "position-label gender-label"
                 ]
                 ,
 
@@ -57,10 +72,10 @@ class UserType extends AbstractType
                     'class' => 'toto'
                 ]
                 ,
+                "required"=>true
 
             ])
             ->add("address", AddressType::class)
-
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -68,8 +83,7 @@ class UserType extends AbstractType
                         'message' => 'You should agree to our terms.',
                     ]),
                 ],
-            ])
-            ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -78,5 +92,20 @@ class UserType extends AbstractType
             'data_class' => User::class,
 
         ]);
+    }
+
+    public function minAge($value, ExecutionContextInterface $context)
+    {
+
+        $dob = $value;
+
+        $today = new DateTime();
+        $minAgeDate = $today->modify('-18 years');
+                //modify allows us to increment or decrement with the format strtotime()
+
+        if ($dob > $minAgeDate) {
+            $context->buildViolation('You must be at least 18 years old.')
+                ->addViolation();
+        }
     }
 }

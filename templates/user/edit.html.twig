@@ -6,13 +6,28 @@
     <h1 class="w-fit mx-auto my-5">Edit User</h1>
 
     <div class="container mt-3 form-container position-relative update-user-form">
-        {{ form_errors(userForm) }}
         {{ form_start(userForm , {
             "attr" : {
                 "class" : "w-75 registration-form"
             }
         }
         ) }}
+        {% if not userForm.vars.valid %}
+            <div class="alert alert-danger">
+                {{ form_errors(userForm) }}
+                {% for children in userForm.children %}
+                    {% if not children.vars.valid %}
+                        {{ form_errors(children) }}
+                    {% endif %}
+                    {% for child in children %}
+                        {% if not child.vars.valid %}
+                            {{ form_errors(child) }}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <div class="row">
 
             <div class="col-sm-6 form-group">
@@ -136,14 +151,15 @@
             </div>
 
 
-            <div class=" form-group mb-0 d-flex flex-column align-items-center gap-2">
+            <div class=" form-group mb-0 d-flex justify-content-center gap-2">
+                <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="custom-btn-edit edit-role">Edit User Roles</a>
                 <a href="{{ path('app_user_index') }}" class="custom-btn-back-to-list d-block">Back to list</a>
-                <button class="custom-btn-edit d-block position-relative" type="submit">
 
-                    Update
-                </button>
             </div>
+            <button class="custom-btn-edit d-block position-relative w-fit mx-auto" type="submit">
 
+                Update
+            </button>
         </div>
 
         {{ form_end(userForm) }}

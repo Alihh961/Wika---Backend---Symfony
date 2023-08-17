@@ -33,16 +33,16 @@ class UserController extends AbstractController
     }
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository , UserPasswordHasherInterface $userPasswordHasher): Response
+    public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
     {
 
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class,$user);
+        $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-        $user->setPassword($form->get("plainPassword")->getData());
+            $user->setPassword($form->get("plainPassword")->getData());
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -57,7 +57,7 @@ class UserController extends AbstractController
 
         return $this->renderForm('user/new.html.twig', [
             'user' => $user,
-            "registrationForm"=>$form,
+            "registrationForm" => $form,
         ]);
     }
 
@@ -78,11 +78,8 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
 
-        dd($form->getData());
         if ($form->isSubmitted() && $form->isValid()) {
-        dd("ici");
-//            $this->entityManager->persist($user);
-//            $this->entityManager->flush();
+
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
@@ -97,30 +94,34 @@ class UserController extends AbstractController
     #[Route('/{id}/edit/roles', name: 'app_user_edit_roles', methods: ['GET', 'POST'])]
     public function editRoles(Request $request, User $user, UserRepository $userRepository): Response
     {
+        dd($user->getRoles());
+        $currentRoles = $user->getRoles();
 
-        $currentRole = $user->getRoles();
-        $form = $this->createForm(RolesFormType::class ,[
-            'currentRole'=>$currentRole
+        $form = $this->createForm(RolesFormType::class,null,  [
+                'currentRole' => $currentRoles[0]
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $newRoles = $form->get("roles")->getData();
+
+            $user->setRoles($newRoles);
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/roles_edit.html.twig', [
-            "form"=>$form,
-            "user"=>$user
+            "form" => $form,
+            "user" => $user
         ]);
     }
 
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
         }
 

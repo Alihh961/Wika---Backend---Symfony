@@ -93,9 +93,18 @@
   text-align: center;
   text-decoration: none;
 
+  &.edit-role{
+    background: #ffc107!important;
+
+    &:hover{
+      background: #d9b025 !important;
+    }
+  }
+
   &:hover {
     background: linear-gradient(0deg, rgb(28 215 36) 0%, rgb(38 245 46) 100%);
   }
+
 
 }
 

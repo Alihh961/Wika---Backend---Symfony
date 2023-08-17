@@ -14,6 +14,7 @@ import "./bootstrap";
 // Sign-in Form
 
 
+
 function checkInputValues() { // Translate the label when focusing in and out in the input
 
     let inputs = [document.querySelectorAll(".login-input"), document.querySelectorAll(".register-input")];
@@ -27,13 +28,18 @@ function checkInputValues() { // Translate the label when focusing in and out in
                 if (input.value != "") {
                     if (input.classList.contains("special-input")) {
                         input.classList.add("special-translate");
+                        console.log("special");
                         ;
                     } else {
                         input.classList.add("translate");
+                        console.log("not special")
                     }
 
 
                 } else {
+                    if (input.classList.contains("special-input")) {
+                        input.classList.remove("special-translate");
+                    }
                     input.classList.remove("translate");
                 }
             });
@@ -54,13 +60,18 @@ function checkInputValuesOnLoad() { // check if the input have a value on load ,
             if (input.value != "") {
                 if (input.classList.contains("special-input")) {
                     input.classList.add("special-translate");
-                    ;
-                } else {
+                }
+                 else {
                     input.classList.add("translate");
                 }
 
             } else {
-                input.classList.remove("translate");
+                if (input.classList.contains("special-input")) {
+                    input.classList.remove("special-translate");
+                }  else {
+                    input.classList.remove("translate");
+
+                }
             }
         });
 

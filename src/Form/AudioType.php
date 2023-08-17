@@ -4,6 +4,9 @@ namespace App\Form;
 
 use App\Entity\Audio;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,12 +15,12 @@ class AudioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('description')
-            ->add('url')
-            ->add('size')
-            ->add('format')
-            ->add('duration')
+            ->add('name',TextType::class)
+            ->add('description', TextareaType::class)
+            ->add('url' , TextType::class)
+            ->add('size',NumberType::class)
+            ->add('format', TextType::class)
+            ->add('duration', NumberType::class)
         ;
     }
 

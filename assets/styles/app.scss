@@ -5,7 +5,6 @@
 @import "/assets/styles/partials/pagination";
 
 
-
 @font-face {
   font-family: Montserrat;
   src: url("/assets/styles/fonts/Montserrat/static/Montserrat-Regular.ttf");
@@ -31,18 +30,32 @@ body {
 }
 
 
-.w-fit{
-  width: fit-content!important;
+.w-fit {
+  width: fit-content !important;
 }
 
-.white{
+.white {
   color: white;
 }
 
-.section{
+.section {
   background-color: #13101E;
   min-height: 100vh;
 }
 
 
+//Editing bootstrap classes
 
+.alert-danger {
+  padding: 5px !important;
+
+  ul {
+    margin: 0 !important;
+    font-weight: bold;
+    font-size: 12px;
+  }
+}
+
+.dropdown-item:hover{
+  background-color: #c0c0c0!important;
+}

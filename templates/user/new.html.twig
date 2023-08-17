@@ -15,6 +15,22 @@
             }
         }
         ) }}
+
+        {% if not registrationForm.vars.valid %}
+            <div class="alert alert-danger">
+                {{ form_errors(registrationForm) }}
+                {% for children in registrationForm.children %}
+                    {% if not children.vars.valid %}
+                        {{ form_errors(children) }}
+                    {% endif %}
+                    {% for child in children %}
+                        {% if not child.vars.valid %}
+                            {{ form_errors(child) }}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
         <div class="row">
 
             <div class="col-sm-6 form-group">

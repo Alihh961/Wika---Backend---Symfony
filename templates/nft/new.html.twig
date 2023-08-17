@@ -4,34 +4,54 @@
 
 {% block body %}
     <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
+    <h1 class="w-fit mx-auto my-5 position-relative">Create new Nft</h1>
 
-    {{ form_start(form , {
-        "attr" : {
-            "class" : "w-50 m-auto d-flex flex-column gap-3 align-items-center position-relative"
-        }
-    }) }}
-    <h1 class="">Create new Nft</h1>
+    <div class="row">
+        {{ form_start(form , {
+            "attr" : {
+                "class" : "w-50 m-auto d-flex flex-column gap-3 align-items-center position-relative col-8"
+            }
+        }) }}
 
-    {{ form_label(form.name) }}
-    {{ form_widget(form.name) }}
+        {% if not form.vars.valid %}
+            <div class="alert alert-danger">
+                {{ form_errors(form) }}
+                {% for children in form.children %}
+                    {% if not children.vars.valid %}
+                        {{ form_errors(children) }}
+                    {% endif %}
+                    {% for child in children %}
+                        {% if not child.vars.valid %}
+                            {{ form_errors(child) }}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
 
-    {{ form_label(form.users) }}
-    {{ form_widget(form.users) }}
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
 
-    {{ form_label(form.SubCategory) }}
-    {{ form_widget(form.SubCategory) }}
+{#        {{ form_label(form.users) }}#}
+{#        {{ form_widget(form.users) }}#}
 
-    {{ form_label(form.price) }}
-    {{ form_widget(form.price) }}
+        {{ form_label(form.SubCategory) }}
+        {{ form_widget(form.SubCategory) }}
 
-    {{ form_label(form.description) }}
-    {{ form_widget(form.description) }}
+        {{ form_label(form.price) }}
+        {{ form_widget(form.price) }}
 
-    {{ form_row(form.file) }}
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
 
-<button type="submit">Submit</button>
-    {{ form_end(form) }}
+        {{ form_row(form.file) }}
 
+        <a href="{{ path('app_nft_index') }}" class="custom-btn-back-to-list m-auto">back to list</a>
+        <button class="custom-btn-edit d-block position-relative" type="submit">
 
-    <a href="{{ path('app_nft_index') }}" class="custom-btn-back-to-list m-auto">back to list</a>
+            Submit
+        </button>
+        {{ form_end(form) }}
+    </div>
+
 {% endblock %}
