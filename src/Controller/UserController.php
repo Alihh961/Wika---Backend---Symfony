@@ -94,7 +94,6 @@ class UserController extends AbstractController
     #[Route('/{id}/edit/roles', name: 'app_user_edit_roles', methods: ['GET', 'POST'])]
     public function editRoles(Request $request, User $user, UserRepository $userRepository): Response
     {
-        dd($user->getRoles());
         $currentRoles = $user->getRoles();
 
         $form = $this->createForm(RolesFormType::class,null,  [
@@ -106,10 +105,10 @@ class UserController extends AbstractController
 
             $newRoles = $form->get("roles")->getData();
 
-            $user->setRoles($newRoles);
+            $user->setRoles([$newRoles]);
             $userRepository->save($user, true);
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_edit', ["id"=>$user->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/roles_edit.html.twig', [

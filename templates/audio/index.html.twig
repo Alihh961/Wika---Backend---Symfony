@@ -29,7 +29,7 @@
                 <td>{{ audio.id }}</td>
                 <td>{{ audio.duration }}</td>
                 <td>
-                    <a href="{{ path('app_audio_show', {'id': audio.id}) }}">show</a>
+                    <a href="{{ path('app_audio_show', {'id': audio.id}) }}" class="btn btn-warning">Show</a>
                 </td>
             </tr>
         {% else %}

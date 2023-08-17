@@ -3,11 +3,42 @@
 {% block title %}Edit Category{% endblock %}
 
 {% block body %}
-    <h1>Edit Category</h1>
 
-    {{ include('category/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_category_index') }}">back to list</a>
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
+
+    <h1 class="position-relative w-fit mx-auto my-5">Edit Category</h1>
+
+    {{ form_start(form , {
+        "attr" : {
+            "class" : "position-relative custom-form w-25 mx-auto text-center"
+        }
+    }) }}
+
+    {% if not form.vars.valid %}
+        <div class="alert alert-danger">
+            {{ form_errors(form) }}
+            {% for children in form.children %}
+                {% if not children.vars.valid %}
+                    {{ form_errors(children) }}
+                {% endif %}
+                {% for child in children %}
+                    {% if not child.vars.valid %}
+                        {{ form_errors(child) }}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div>
+        {{ form_label(form.name , "Name :") }}
+        {{ form_widget(form.name) }}
+    </div>
+    <div class="my-3">
+        <a href="{{ path('app_category_index') }}" class="custom-btn-back-to-list">Back to list</a>
+        <button type="submit" class="custom-btn-edit">Update</button>
+    </div>
 
     {{ include('category/_delete_form.html.twig') }}
+
 {% endblock %}

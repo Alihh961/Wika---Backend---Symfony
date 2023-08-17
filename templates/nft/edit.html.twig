@@ -13,10 +13,10 @@
         <table>
             <tr>
                 <td colspan="2">
-                    {% if not registrationForm.vars.valid %}
+                    {% if not nftEditForm.vars.valid %}
                         <div class="alert alert-danger">
-                            {{ form_errors(registrationForm) }}
-                            {% for children in registrationForm.children %}
+                            {{ form_errors(nftEditForm) }}
+                            {% for children in nftEditForm.children %}
                                 {% if not children.vars.valid %}
                                     {{ form_errors(children) }}
                                 {% endif %}

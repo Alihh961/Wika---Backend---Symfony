@@ -3,9 +3,11 @@
 {% block title %}SubCategory index{% endblock %}
 
 {% block body %}
-    <h1>SubCategory index</h1>
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
 
-    <table class="table">
+    <h1 class="w-fit mx-auto position-relative my-3">All SubCategories</h1>
+
+    <table class="rwd-table position-relative">
         <thead>
             <tr>
                 <th>Id</th>
@@ -18,9 +20,10 @@
             <tr>
                 <td>{{ sub_category.id }}</td>
                 <td>{{ sub_category.name }}</td>
-                <td>
-                    <a href="{{ path('app_sub_category_show', {'id': sub_category.id}) }}">show</a>
-                    <a href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}">edit</a>
+                <td class="d-flex justify-content-center align-items-center gap-2">
+                    <a href="{{ path('app_sub_category_show', {'id': sub_category.id}) }}" class="btn btn-warning">Show</a>
+                    <a href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}" class="custom-btn-edit">Edit</a>
+                    {{ include ("sub_category/_delete_form.html.twig") }}
                 </td>
             </tr>
         {% else %}

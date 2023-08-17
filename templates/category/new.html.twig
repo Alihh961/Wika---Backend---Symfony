@@ -3,9 +3,39 @@
 {% block title %}New Category{% endblock %}
 
 {% block body %}
-    <h1>Create new Category</h1>
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
 
-    {{ include('category/_form.html.twig') }}
+    <h1 class="position-relative w-fit mx-auto my-5">Create new Category</h1>
 
-    <a href="{{ path('app_category_index') }}">back to list</a>
+    {{ form_start(form , {
+        "attr" : {
+            "class" : "position-relative custom-form w-25 mx-auto text-center"
+        }
+    }) }}
+
+    {% if not form.vars.valid %}
+        <div class="alert alert-danger">
+            {{ form_errors(form) }}
+            {% for children in form.children %}
+                {% if not children.vars.valid %}
+                    {{ form_errors(children) }}
+                {% endif %}
+                {% for child in children %}
+                    {% if not child.vars.valid %}
+                        {{ form_errors(child) }}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div>
+        {{ form_label(form.name , "Name :") }}
+        {{ form_widget(form.name) }}
+    </div>
+    <a href="{{ path('app_category_index') }}" class="custom-btn-back-to-list mx-auto my-3">Back to list</a>
+
+    <button type="submit" class="custom-btn-create mx-auto"> Submit</button>
+
+    {{ form_end(form) }}
+
 {% endblock %}

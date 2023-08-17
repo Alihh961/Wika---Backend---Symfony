@@ -29,7 +29,7 @@
                 <td>{{ video.id }}</td>
                 <td>{{ video.duration }}</td>
                 <td>
-                    <a href="{{ path('app_video_show', {'id': video.id}) }}">show</a>
+                    <a href="{{ path('app_video_show', {'id': video.id}) }}" class="btn btn-warning">Show</a>
                 </td>
             </tr>
         {% else %}

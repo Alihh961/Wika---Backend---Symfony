@@ -3,11 +3,63 @@
 {% block title %}Edit SubCategory{% endblock %}
 
 {% block body %}
-    <h1>Edit SubCategory</h1>
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
 
-    {{ include('sub_category/_form.html.twig', {'button_label': 'Update'}) }}
+    <h1 class="w-fit mx-auto position-relative my-3">Edit SubCategory</h1>
 
-    <a href="{{ path('app_sub_category_index') }}">back to list</a>
+    {{ form_start(form , {
+        "attr" : {
+            "class" : "position-relative custom-form w-50 mx-auto my-3"
+        }
+    }) }}
+    <table class="mx-auto">
+        <tr>
+            <td>
+                {{ form_label(form.name) }} :
+
+            </td>
+            <td>
+                {{ form_widget(form.name) }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                {{ form_label(form.nfts) }} :
+
+            </td>
+            <td>
+                {{ form_widget(form.nfts) }}
+            </td>
+        </tr>
+        <tr class="my-3">
+
+            <td>
+                {{ form_label(form.category) }} :
+
+            </td>
+            <td>
+                {{ form_widget(form.category) }}
+            </td>
+        </tr>
+
+
+        <tr>
+            <td colspan="2">
+                <a href="{{ path('app_sub_category_index') }}" class="custom-btn-back-to-list">Back to list</a>
+
+                <button type="submit" class="custom-btn-edit">Update</button>
+
+            </td>
+        </tr>
+
+
+    </table>
+
+
+
+    {{ form_end(form) }}
+
 
     {{ include('sub_category/_delete_form.html.twig') }}
 {% endblock %}

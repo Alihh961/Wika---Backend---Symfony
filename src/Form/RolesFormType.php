@@ -23,9 +23,9 @@ class RolesFormType extends AbstractType
                     "Super Admin" => "ROLE_SUPER_ADMIN",
                     "User" => "ROLE_USER"
                 ],
-                "multiple" => true,
+                "multiple" => false,
                 "expanded" => true,
-                "data" => [$currentRole],
+                "data" => $currentRole,
                 "constraints" => [
                     new NotBlank([
                         "message" => "Choose at least one Role."
