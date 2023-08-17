@@ -9,7 +9,7 @@
     <div class="row">
         {{ form_start(form , {
             "attr" : {
-                "class" : "w-50 m-auto d-flex flex-column gap-3 align-items-center position-relative col-8"
+                "class" : "m-auto d-flex flex-column gap-2 align-items-center position-relative col-4 form-nft custom-form"
             }
         }) }}
 
@@ -29,24 +29,40 @@
             </div>
         {% endif %}
 
-        {{ form_label(form.name) }}
-        {{ form_widget(form.name) }}
+        <table class="col-12">
 
-{#        {{ form_label(form.users) }}#}
-{#        {{ form_widget(form.users) }}#}
+            <tr>
+                <td>{{ form_label(form.name) }} :</td>
+                <td>{{ form_widget(form.name) }}</td>
+            </tr>
 
-        {{ form_label(form.SubCategory) }}
-        {{ form_widget(form.SubCategory) }}
+            {#        {{ form_label(form.users) }} #}
+            {#        {{ form_widget(form.users) }} #}
 
-        {{ form_label(form.price) }}
-        {{ form_widget(form.price) }}
+            <tr>
+                <td>{{ form_label(form.SubCategory) }} :</td>
+                <td>{{ form_widget(form.SubCategory) }}</td>
+            </tr>
 
-        {{ form_label(form.description) }}
-        {{ form_widget(form.description) }}
+            <tr>
+                <td>{{ form_label(form.price) }} :</td>
+                <td>{{ form_widget(form.price) }}</td>
+            </tr>
 
-        {{ form_row(form.file) }}
+            <tr>
+                <td>{{ form_label(form.description) }} :</td>
+                <td>{{ form_widget(form.description) }}</td>
+            </tr>
 
-        <a href="{{ path('app_nft_index') }}" class="custom-btn-back-to-list m-auto">back to list</a>
+            <tr>
+                <td>{{ form_label(form.file) }} :</td>
+                <td>{{ form_widget(form.file) }}</td>
+            </tr>
+
+
+        </table>
+
+        <a href="{{ path('app_nft_index') }}" class="custom-btn-back-to-list m-auto">Back to list</a>
         <button class="custom-btn-edit d-block position-relative" type="submit">
 
             Submit

@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RolesFormType extends AbstractType
 {
@@ -25,6 +26,11 @@ class RolesFormType extends AbstractType
                 "multiple" => true,
                 "expanded" => true,
                 "data" => [$currentRole],
+                "constraints" => [
+                    new NotBlank([
+                        "message" => "Choose at least one Role."
+                    ])
+                ]
 
             ]);
     }

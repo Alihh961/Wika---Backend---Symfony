@@ -39,8 +39,6 @@ class RegistrationFormType extends AbstractType
                 ],
 
             ])
-
-
             ->add('lastName', TextType::class, [
                 "constraints" => [
                     new Regex([
@@ -52,8 +50,6 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ]
             ])
-
-
             ->add('dateOfBirth', DateType::class, [
                 'label_attr' => [
                     "class" => "position-label date-input",
@@ -67,8 +63,6 @@ class RegistrationFormType extends AbstractType
                     ])
                 ]
             ])
-
-
             ->add('email', EmailType::class, [
                 "constraints" => [
                     new Email([]),
@@ -81,8 +75,6 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ]
             ])
-
-
             ->add('gender', ChoiceType::class, [
                 "choices" => [
                     "Male" => "male",
@@ -100,21 +92,19 @@ class RegistrationFormType extends AbstractType
                 "expanded" => "true",
                 "data" => "male"
             ])
-
-
             ->add("address", AddressType::class)
-
-
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
                     ]),
+                    new NotBlank([
+                        "message" => "Enter a Nft name."
+                    ])
+
                 ],
             ])
-
-
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set into the object directly,
                 // this is read and encoded in the controller

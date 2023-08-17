@@ -23,6 +23,8 @@
                 <td class="d-flex justify-content-evenly align-items-center">
                     <a href="{{ path('app_nft_show', {'id': nft.id}) }}" class="btn-warning btn">Show</a>
                     <a href="{{ path('app_nft_edit', {'id': nft.id}) }}" class="custom-btn-edit">Edit</a>
+                    {{ include('nft/_delete_form.html.twig') }}
+
                 </td>
             </tr>
         {% else %}

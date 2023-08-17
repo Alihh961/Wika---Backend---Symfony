@@ -33,12 +33,12 @@ class NftController extends AbstractController
     }
 
     #[Route('/', name: 'app_nft_index', methods: ['GET'])]
-    public function index(NftRepository $nftRepository , Request $request): Response
+    public function index(NftRepository $nftRepository, Request $request): Response
     {
         $nfts = $nftRepository->findAll();
         $pagination = $this->paginator->paginate(
             $nfts,
-            $request->query->getInt("page",1),
+            $request->query->getInt("page", 1),
             7
         );
 
@@ -63,7 +63,7 @@ class NftController extends AbstractController
 
             if ($file) {
 
-                $mediaEntity = $this->createMediaService->createMediaFromUploadFile($file, $imageDescription , $imageName);
+                $mediaEntity = $this->createMediaService->createMediaFromUploadFile($file, $imageDescription, $imageName);
                 $reflectionClass = new \ReflectionClass($mediaEntity);
 
 
@@ -105,17 +105,21 @@ class NftController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_nft_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, NftRepository $nftRepository , Nft $nft , ImageRepository $imageRepository): Response
+    public function edit(Request $request, NftRepository $nftRepository, Nft $nft, ImageRepository $imageRepository): Response
     {
         $imageEntity = $nft->getImage();
+        $description = $imageEntity->getDescription();
+        $nftPrice = $nft->getPrice();
 
-        $form = $this->createForm(EditNftFormType::class);
+        $form = $this->createForm(EditNftFormType::class, null,[
+            "description"=>$description ,
+                "price"=>$nftPrice
+            ]
+        );
         $form->handleRequest($request);
 
 
-
         if ($form->isSubmitted() && $form->isValid()) {
-
             $price = $form->get('price')->getData();
             $nft->setPrice($price);
 
@@ -123,14 +127,14 @@ class NftController extends AbstractController
             $imageEntity->setDescription($description);
 
 
-            $imageRepository->save($imageEntity , true);
+            $imageRepository->save($imageEntity, true);
             $nftRepository->save($nft, true);
 
             return $this->redirectToRoute('app_nft_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('nft/edit.html.twig', [
-            "nft"=>$nft,
+            "nft" => $nft,
             'nftEditForm' => $form,
         ]);
     }

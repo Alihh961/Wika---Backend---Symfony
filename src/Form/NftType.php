@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class NftType extends AbstractType
 {
@@ -29,7 +30,12 @@ class NftType extends AbstractType
         $builder
             ->add('name' , TextType::class , [
                 "required"=>true ,
-                "mapped"=>false
+                "mapped"=>false,
+                "constraints"=> [
+                    new NotBlank([
+                        "message"=>"Enter a Nft name."
+                    ])
+                ]
             ])
 //            ->add('users' , EntityType::class , [
 //                "class" => User::class,
@@ -46,15 +52,36 @@ class NftType extends AbstractType
 //            ])
             ->add('SubCategory' , EntityType::class , [
                 "class"=>SubCategory::class ,
-                "multiple"=>true
+                "multiple"=>true,
+                "constraints"=> [
+                    new NotBlank([
+                        "message"=>"Choose at least one category."
+                    ])
+                ]
             ] )
             ->add("file",FileType::class , [
-                "mapped"=>false
+                "mapped"=>false,
+                "constraints"=> [
+                    new NotBlank([
+                        "message"=>"No Uploaded Image."
+                    ])
+                ]
             ])
-            ->add("price" , NumberType::class , [])
+            ->add("price" , NumberType::class , [
+                "constraints"=> [
+                    new NotBlank([
+                        "message"=>"Enter a price."
+                    ])
+                ]
+            ])
             ->add('description', TextareaType::class, [
                 'label' => "Description",
-                'mapped' => false
+                'mapped' => false,
+                "constraints"=> [
+                    new NotBlank([
+                        "message"=>"Enter a description."
+                    ])
+                ]
             ])
 
 //            ->add("image" , ImageType::class , [
