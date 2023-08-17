@@ -3,9 +3,79 @@
 {% block title %}New SubCategory{% endblock %}
 
 {% block body %}
-    <h1>Create new SubCategory</h1>
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
 
-    {{ include('sub_category/_form.html.twig') }}
+    <h1 class="w-fit mx-auto position-relative my-3">Create new SubCategory</h1>
 
-    <a href="{{ path('app_sub_category_index') }}">back to list</a>
+
+{{ form_start(form , {
+    "attr" : {
+        "class" : "position-relative custom-form w-50  m-auto"
+    }
+}) }}
+
+
+    {% if not form.vars.valid %}
+        <div class="alert alert-danger">
+            {{ form_errors(form) }}
+            {% for children in form.children %}
+                {% if not children.vars.valid %}
+                    {{ form_errors(children) }}
+                {% endif %}
+                {% for child in children %}
+                    {% if not child.vars.valid %}
+                        {{ form_errors(child) }}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <table class="mx-auto">
+        <tr>
+            <td>
+                {{ form_label(form.name) }} :
+
+            </td>
+            <td>
+                {{ form_widget(form.name) }}
+            </td>
+        </tr>
+
+        <tr>
+            <td >
+                {{ form_label(form.nfts) }} :
+
+            </td>
+            <td class="py-3">
+                {{ form_widget(form.nfts) }}
+            </td>
+        </tr>
+        <tr>
+
+            <td class="py-3">
+                {{ form_label(form.category) }} :
+
+            </td>
+            <td>
+                {{ form_widget(form.category) }}
+            </td>
+        </tr>
+
+
+        <tr>
+            <td colspan="2" class="text-center">
+                <a href="{{ path('app_sub_category_index') }}" class="custom-btn-back-to-list">Back to list</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="text-center py-3">
+
+            <button type="submit" class="custom-btn-create d-inline-block">Create</button>
+            </td>
+        </tr>
+
+    </table>
+    {{ form_end(form) }}
+
 {% endblock %}

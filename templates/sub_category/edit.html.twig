@@ -12,6 +12,23 @@
             "class" : "position-relative custom-form w-50 mx-auto my-3"
         }
     }) }}
+
+
+    {% if not form.vars.valid %}
+        <div class="alert alert-danger">
+            {{ form_errors(form) }}
+            {% for children in form.children %}
+                {% if not children.vars.valid %}
+                    {{ form_errors(children) }}
+                {% endif %}
+                {% for child in children %}
+                    {% if not child.vars.valid %}
+                        {{ form_errors(child) }}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
     <table class="mx-auto">
         <tr>
             <td>
@@ -24,17 +41,17 @@
         </tr>
 
         <tr>
-            <td>
+            <td >
                 {{ form_label(form.nfts) }} :
 
             </td>
-            <td>
+            <td class="py-3">
                 {{ form_widget(form.nfts) }}
             </td>
         </tr>
-        <tr class="my-3">
+        <tr>
 
-            <td>
+            <td class="py-3">
                 {{ form_label(form.category) }} :
 
             </td>
@@ -45,7 +62,7 @@
 
 
         <tr>
-            <td colspan="2">
+            <td colspan="2" class="text-center">
                 <a href="{{ path('app_sub_category_index') }}" class="custom-btn-back-to-list">Back to list</a>
 
                 <button type="submit" class="custom-btn-edit">Update</button>
