@@ -11,9 +11,12 @@ import "./styles/app.scss";
 // start the Stimulus application
 import "./bootstrap";
 
+import "@fortawesome/fontawesome-free/js/fontawesome";
+import "@fortawesome/fontawesome-free/js/solid";
+import "@fortawesome/fontawesome-free/js/regular";
+import "@fortawesome/fontawesome-free/js/brands";
+
 // Sign-in Form
-
-
 
 function checkInputValues() { // Translate the label when focusing in and out in the input
 

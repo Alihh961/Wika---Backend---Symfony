@@ -26,13 +26,27 @@
                     {{ include ("sub_category/_delete_form.html.twig") }}
                 </td>
             </tr>
+            <tr>
+                <td colspan="3">
+                    <hr class="my-0">
+                </td>
+            </tr>
         {% else %}
             <tr>
                 <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
+        <tr>
+            <td colspan="3">
+                {{ knp_pagination_render(sub_categories) }}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <a href="{{ path('app_sub_category_new') }}" class="custom-btn-create mx-auto w-fit px-2">Create new SubCategory</a>
+            </td>
+        </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_sub_category_new') }}">Create new</a>
 {% endblock %}

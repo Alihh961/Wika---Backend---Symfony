@@ -7,6 +7,9 @@
     <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
     <div class="m-auto my-5 w-fit text-center position-relative">
         <h2>ETH Price Today is : {{ prix }} €</h2>
+        <div>
+           <i class="fa fa-search"></i><i class="fa-brands fa-square-facebook justify-self-end"></i>
+        </div>
         {% if(app.user) %}
             <h1>Welcome To Home Page</h1>
             {% if not is_granted('ROLE_ADMIN') %}
