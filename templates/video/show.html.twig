@@ -3,9 +3,11 @@
 {% block title %}Video{% endblock %}
 
 {% block body %}
-    <h1>Video</h1>
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
+    <h1 class="w-fit mx-auto my-5 position-relative">Video</h1>
 
-    <table class="table">
+
+    <table class="rwd-table position-relative">
         <tbody>
             <tr>
                 <th>Name</th>
@@ -38,6 +40,6 @@
         </tbody>
     </table>
 
-    <a class="custom-btn-back-to-list" href="{{ path('app_video_index') }}">Back to list</a>
+    <a class="custom-btn-back-to-list" href="{{ path('app_video_index') }}" class="mx-auto d-block">Back to list</a>
 
 {% endblock %}

@@ -3,40 +3,42 @@
 {% block title %}Video index{% endblock %}
 
 {% block body %}
-    <h1>Video index</h1>
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
+    <h1 class="w-fit mx-auto my-5 position-relative">All Videos</h1>
 
-    <table class="table">
+
+    <table class="rwd-table position-relative">
         <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Url</th>
-                <th>Size</th>
-                <th>Format</th>
-                <th>Id</th>
-                <th>Duration</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for video in videos %}
             <tr>
-                <td>{{ video.name }}</td>
-                <td>{{ video.description }}</td>
-                <td>{{ video.url }}</td>
-                <td>{{ video.size }}</td>
-                <td>{{ video.format }}</td>
                 <td>{{ video.id }}</td>
-                <td>{{ video.duration }}</td>
+                <td>{{ video.name }}</td>
                 <td>
                     <a href="{{ path('app_video_show', {'id': video.id}) }}" class="btn btn-warning">Show</a>
                 </td>
             </tr>
+            <tr>
+                <td colspan="3">
+                    <hr class="m-0">
+                </td>
+            </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
+        <tr>
+            <td colspan="3">
+            {{ knp_pagination_render(videos) }}
+            </td>
+        </tr>
         </tbody>
     </table>
 

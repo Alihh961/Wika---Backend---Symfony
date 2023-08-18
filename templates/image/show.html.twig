@@ -3,9 +3,11 @@
 {% block title %}Image{% endblock %}
 
 {% block body %}
-    <h1>Image</h1>
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
+    <h1 class="w-fit mx-auto my-5 position-relative">Image</h1>
 
-    <table class="rwd-table">
+
+    <table class="rwd-table position-relative">
         <tbody>
             <tr>
                 <th>Name</th>
@@ -31,9 +33,14 @@
                 <th>Id</th>
                 <td>{{ image.id }}</td>
             </tr>
+
+
+        </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_image_index') }}" class="custom-btn-back-to-list">Back to list</a>
+    <a href="{{ path('app_image_index') }}" class="custom-btn-back-to-list mx-auto my-3 d-block">Back to list</a>
+
+
 
 {% endblock %}

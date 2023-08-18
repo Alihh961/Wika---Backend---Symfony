@@ -1,5 +1,8 @@
 .pagination {
 
+  margin: 10px auto;
+  width: fit-content;
+
   .page a, .current, .next a, .last a, .previous a, .first a {
     position: relative;
     display: block;

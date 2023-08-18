@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Audio;
 use App\Form\AudioType;
 use App\Repository\AudioRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,11 +14,26 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/audio')]
 class AudioController extends AbstractController
 {
-    #[Route('/', name: 'app_audio_index', methods: ['GET'])]
-    public function index(AudioRepository $audioRepository): Response
+
+    public function __construct(
+        private PaginatorInterface $paginator
+    )
     {
+    }
+
+    #[Route('/', name: 'app_audio_index', methods: ['GET'])]
+    public function index(AudioRepository $audioRepository , Request $request): Response
+    {
+
+        $allAudios = $audioRepository->findAll();
+        $pagination = $this->paginator->paginate(
+            $allAudios,
+            $request->query->getInt("page" , 1),
+            10
+        );
+
         return $this->render('audio/index.html.twig', [
-            'audio' => $audioRepository->findAll(),
+            'audios' => $pagination,
         ]);
     }
 

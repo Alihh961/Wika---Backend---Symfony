@@ -27,11 +27,21 @@
 
                 </td>
             </tr>
+            <tr>
+                <td colspan="3">
+                    <hr  class="my-0">
+                </td>
+            </tr >
         {% else %}
             <tr>
                 <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
+        <tr>
+            <td colspan="3">
+                {{ knp_pagination_render(categories) }}
+            </td>
+        </tr>
         <tr>
             <td colspan="3">
                 <a href="{{ path('app_category_new') }}" class="custom-btn-create mx-auto my-3 px-2 w-fit">Create new category</a>

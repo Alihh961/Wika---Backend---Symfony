@@ -3,9 +3,11 @@
 {% block title %}Audio{% endblock %}
 
 {% block body %}
-    <h1>Audio</h1>
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
 
-    <table class="table">
+    <h1 class="w-fit mx-auto my-3 position-relative">Audio</h1>
+
+    <table class="rwd-table position-relative">
         <tbody>
             <tr>
                 <th>Name</th>
@@ -38,7 +40,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_audio_index') }}" class="custom-btn-back-to-list">Back to list</a>
+    <a href="{{ path('app_audio_index') }}" class="custom-btn-back-to-list d-block mx-auto my-2">Back to list</a>
 
 
 {% endblock %}

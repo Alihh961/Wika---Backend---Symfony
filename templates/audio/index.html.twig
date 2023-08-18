@@ -3,40 +3,45 @@
 {% block title %}Audio index{% endblock %}
 
 {% block body %}
-    <h1>Audio index</h1>
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
 
-    <table class="table">
+    <h1 class="w-fit mx-auto my-3 position-relative">All Audios</h1>
+
+    <table class="rwd-table position-relative">
         <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Url</th>
-                <th>Size</th>
-                <th>Format</th>
-                <th>Id</th>
-                <th>Duration</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
-        {% for audio in audio %}
+        {% for audio in audios %}
             <tr>
-                <td>{{ audio.name }}</td>
-                <td>{{ audio.description }}</td>
-                <td>{{ audio.url }}</td>
-                <td>{{ audio.size }}</td>
-                <td>{{ audio.format }}</td>
                 <td>{{ audio.id }}</td>
+                <td>{{ audio.name }}</td>
                 <td>{{ audio.duration }}</td>
                 <td>
                     <a href="{{ path('app_audio_show', {'id': audio.id}) }}" class="btn btn-warning">Show</a>
                 </td>
             </tr>
+            <tr>
+                <td colspan="3">
+                    <hr class="my-0">
+                </td>
+            </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
+
+
+        <tr>
+            <td colspan="3">
+                {{ knp_pagination_render(audios) }}
+            </td>
+        </tr>
         </tbody>
     </table>
 

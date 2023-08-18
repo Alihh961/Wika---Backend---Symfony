@@ -8,16 +8,16 @@
 
     <table class="rwd-table w-100 position-relative">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Highest Role</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Gender</th>
-                <th>Date Of Birth</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Highest Role</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Gender</th>
+            <th>Date Of Birth</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for user in users %}
@@ -36,18 +36,35 @@
 
                 </td>
             </tr>
+            <tr>
+                <td colspan="8" class="py-0">
+                    <hr>
+                </td>
+            </tr>
+
 
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="8">no records found</td>
             </tr>
         {% endfor %}
+        <tr>
+            <td colspan="8">
+                {{ knp_pagination_render(users) }}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <a href="{{ path('app_user_new') }}" class="custom-btn-create mx-auto my-4 px-2">Create new User</a>
+
+            </td>
+        </tr>
 
         </tbody>
 
     </table>
 
-    <a href="{{ path('app_user_new') }}" class="custom-btn-create mx-auto my-4">Create new</a>
+
 
 
 {% endblock %}

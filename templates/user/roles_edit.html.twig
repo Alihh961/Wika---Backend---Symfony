@@ -4,21 +4,39 @@
 
 {% block body %}
 
-<h1 class="w-fit mx-auto my-3">Edit Roles</h1>
-
-    <h3>You are editing the role of the user of email : <span style="color:red ;font-weight: bold">{{ user.email }}</span></h3>
-    <h4>His current role is : <span style="color:red" class="fw-bold">{{ user.roles|HighestRole }}</span></h4>
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
+    <h1 class="w-fit mx-auto my-5 position-relative">Edit Roles</h1>
+<section class="position-relative">
+    <h3>You are editing the role of the user of email : <span
+                style="color:red ;font-weight: bold">{{ user.email }}</span></h3>
+    <h4>His highest current role is : <span style="color:red" class="fw-bold">{{ user.roles|HighestRole }}</span></h4>
 
     {{ form_start(form) }}
+    {% if not form.vars.valid %}
+        <div class="alert alert-danger w-fit mx-auto">
+            {{ form_errors(form) }}
+            {% for children in form.children %}
+                {% if not children.vars.valid %}
+                    {{ form_errors(children) }}
+                {% endif %}
+                {% for child in children %}
+                    {% if not child.vars.valid %}
+                        {{ form_errors(child) }}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
     <div class="w-50 mx-auto my-5 d-flex gap-5 p-4" style="border-radius: 5px ; background: #34495E;
   color: #fff;">
-    {% for child in form.roles.children %}
-    <div style="width:33%" class="text-center">
-        {{ form_widget(child) }}
-        {{ form_label(child) }}
-    </div>
 
-    {%  endfor %}
+        {% for child in form.roles.children %}
+            <div style="width:33%" class="text-center">
+                {{ form_widget(child) }}
+                {{ form_label(child) }}
+            </div>
+
+        {% endfor %}
     </div>
 
     <button class="custom-btn-edit d-block mx-auto my-3" type="submit">
@@ -27,5 +45,6 @@
     </button>
 
     {{ form_end(form) }}
+</section>
 
 {% endblock body %}

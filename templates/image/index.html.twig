@@ -3,38 +3,44 @@
 {% block title %}Image index{% endblock %}
 
 {% block body %}
-    <h1>Image index</h1>
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
+    <h1 class="w-fit mx-auto my-5 position-relative">All Images</h1>
 
-    <table class="rwd-table">
+
+    <table class="rwd-table position-relative">
         <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Url</th>
-                <th>Size</th>
-                <th>Format</th>
-                <th>Id</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for image in images %}
             <tr>
-                <td>{{ image.name }}</td>
-                <td>{{ image.description }}</td>
-                <td>{{ image.url }}</td>
-                <td>{{ image.size }}</td>
-                <td>{{ image.format }}</td>
                 <td>{{ image.id }}</td>
+
+                <td>{{ image.name }}</td>
+
                 <td>
-                    <a href="{{ path('app_image_show', {'id': image.id}) }}" class="btn btn-warning">Show</a>
+                    <a href="{{ path('app_image_show', {'id': image.id}) }}" class="btn btn-warning ">Show</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" class="py-0">
+                    <hr class="my-1">
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
+        <tr>
+            <td colspan="3">
+                {{ knp_pagination_render(images) }}
+            </td>
+        </tr>
         </tbody>
     </table>
 
