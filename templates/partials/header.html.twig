@@ -13,14 +13,16 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
-                           All Users
+                            All Users
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="{{ path('app_user_new') }}"><i class="fa-solid fa-user-plus"></i> Add new User</a>
+                                <a class="dropdown-item" href="{{ path('app_user_new') }}"><i
+                                            class="fa-solid fa-user-plus me-3"></i> Add new User</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="{{ path('app_user_index') }}"><i class="fa-solid fa-users"></i> Show All Users</a>
+                                <a class="dropdown-item" href="{{ path('app_user_index') }}"><i
+                                            class="fa-solid fa-users me-3"></i> Show All Users</a>
                             </li>
                         </ul>
 
@@ -32,10 +34,50 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="{{ path('app_nft_new') }}">Add new Nfts</a>
+                                <a class="dropdown-item d-flex align-items-center gap-2"
+                                   href="{{ path('app_nft_new') }}"><i
+                                            class="fa-solid fa-plus" style="    border-radius: 5px;
+                                    padding: 1px 2px;
+                                    border: 1px solid black;"></i>Add new Nfts</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="{{ path('app_nft_index') }}">Show All Nfts</a>
+                                <a class="dropdown-item"
+                                   href="{{ path('app_nft_index') }}">
+                                    <svg
+                                            width="20px" height="20px" viewBox="0 0 512.000000 512.000000"
+                                            preserveAspectRatio="xMidYMid meet" style="border-radius: 5px" class="me-1">
+
+                                        <!-- Add a gray background rectangle -->
+                                        <rect width="100%" height="100%" fill="gray"/>
+
+                                        <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
+                                           fill="#000000" stroke="none">
+                                            <path d="M2495 5083 c-112 -61 -2094 -1208 -2109 -1222 -47 -41 -46 -3 -46
+-1301 0 -1298 -1 -1260 46 -1301 17 -15 2033 -1182 2112 -1223 41 -21 84 -20
+130 3 81 42 2088 1204 2106 1219 47 42 46 4 46 1302 0 1298 1 1260 -46 1302
+-18 15 -2025 1177 -2106 1219 -45 23 -93 24 -133 2z m1031 -842 l969 -560 3
+-1119 2 -1120 -970 -560 -969 -560 -971 560 -970 560 0 1118 0 1118 968 560
+c532 308 968 560 968 561 1 1 437 -251 970 -558z"/>
+                                            <path d="M1132 3240 c-18 -11 -41 -34 -52 -52 -19 -32 -20 -52 -20 -628 0
+-576 1 -596 20 -628 25 -40 75 -72 115 -72 40 0 94 28 119 63 20 27 21 45 26
+345 l5 316 179 -314 c98 -173 190 -330 203 -348 47 -64 123 -80 184 -39 71 47
+69 25 69 677 0 537 -1 588 -18 620 -36 73 -123 100 -189 60 -67 -41 -67 -41
+-73 -389 l-5 -315 -179 314 c-98 173 -190 330 -203 348 -46 62 -120 79 -181
+42z"/>
+                                            <path d="M2332 3240 c-18 -11 -41 -34 -52 -52 -19 -32 -20 -52 -20 -628 0
+-576 1 -596 20 -628 59 -97 191 -92 242 9 16 29 18 64 18 257 l0 222 183 0
+c153 0 187 3 216 18 101 51 106 183 9 242 -30 18 -51 20 -220 20 l-188 0 0
+140 0 140 183 0 c153 0 187 3 216 18 101 51 106 183 9 242 -31 19 -51 20 -308
+20 -257 0 -277 -1 -308 -20z"/>
+                                            <path d="M3292 3240 c-94 -57 -94 -183 0 -240 28 -17 51 -20 141 -20 l107 0 0
+-507 c0 -489 1 -509 20 -541 59 -97 191 -92 242 9 16 31 18 78 18 537 l0 502
+103 0 c77 0 110 4 136 18 101 51 106 183 9 242 -31 19 -51 20 -388 20 -337 0
+-357 -1 -388 -20z"/>
+                                        </g>
+
+                                    </svg>
+
+                                    Show All Nfts</a>
                             </li>
                         </ul>
 
@@ -48,7 +90,8 @@
                         <ul class="dropdown-menu">
 
                             <li>
-                                <a class="dropdown-item" href="{{ path('app_image_index') }}"><i class="fa-solid fa-images me-3"></i>Show All
+                                <a class="dropdown-item" href="{{ path('app_image_index') }}"><i
+                                            class="fa-solid fa-images me-3"></i>Show All
                                     Images</a>
                             </li>
                             <li>
@@ -56,7 +99,8 @@
                             </li>
 
                             <li>
-                                <a class="dropdown-item" href="{{ path('app_audio_index') }}"><i class="fa-solid fa-audio-description me-3"></i>Show All
+                                <a class="dropdown-item" href="{{ path('app_audio_index') }}"><i
+                                            class="fa-solid fa-audio-description me-3"></i>Show All
                                     Audios</a>
                             </li>
                             <li>
@@ -64,14 +108,16 @@
                             </li>
 
                             <li>
-                                <a class="dropdown-item" href="{{ path('app_video_index') }}"><i class="fa-solid fa-video me-3"></i>Show All
+                                <a class="dropdown-item" href="{{ path('app_video_index') }}"><i
+                                            class="fa-solid fa-video me-3"></i>Show All
                                     Videos</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <a class="dropdown-item" href=""><i class="fa-solid fa-photo-film me-3"></i>Show All Medias</a>
+                                <a class="dropdown-item" href=""><i class="fa-solid fa-photo-film me-3"></i>Show All
+                                    Medias</a>
                             </li>
                         </ul>
                     </li>
@@ -83,23 +129,88 @@
                         <ul class="dropdown-menu">
 
                             <li>
-                                <a class="dropdown-item" href="{{ path('app_category_index') }}">Show All
+                                <a class="dropdown-item" href="{{ path('app_category_index') }}">
+                                    <svg
+                                            width="20px" height="20px" viewBox="0 0 512.000000 512.000000"
+                                            preserveAspectRatio="xMidYMid meet" class="me-3">
+
+                                        <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
+                                           fill="#000000" stroke="none">
+                                            <path d="M852 4830 c-241 -33 -446 -198 -528 -425 -40 -109 -46 -215 -42 -690
+5 -486 6 -494 73 -630 64 -131 165 -230 300 -295 139 -66 121 -65 840 -65
+l650 0 67 33 c76 37 120 82 157 162 l26 55 3 618 c2 509 0 634 -12 704 -27
+155 -121 311 -243 403 -63 48 -174 102 -248 120 -60 15 -944 23 -1043 10z"/>
+                                            <path d="M3325 4834 c-147 -19 -248 -59 -352 -138 -80 -60 -136 -131 -184
+-231 -69 -141 -70 -161 -67 -866 l3 -624 26 -55 c37 -80 81 -125 157 -162 l67
+-33 650 0 c719 0 701 -1 840 65 135 65 236 164 300 295 70 141 70 144 70 695
+0 441 -2 502 -18 560 -51 189 -175 343 -342 425 -138 68 -140 68 -655 71 -256
+1 -478 0 -495 -2z"/>
+                                            <path d="M805 2384 c-86 -17 -213 -78 -282 -134 -106 -87 -194 -230 -224 -365
+-11 -46 -14 -174 -14 -550 0 -436 2 -497 18 -555 64 -237 240 -413 477 -477
+58 -16 119 -18 560 -18 557 0 552 0 708 76 118 57 215 157 277 282 75 150 76
+166 73 884 l-3 618 -33 67 c-37 76 -82 120 -162 157 l-55 26 -635 2 c-510 1
+-649 -1 -705 -13z"/>
+                                            <path d="M2969 2386 c-102 -27 -171 -87 -218 -186 l-26 -55 -3 -624 c-3 -698
+-1 -724 63 -859 86 -181 235 -304 435 -359 58 -16 116 -18 560 -18 551 0 554
+0 695 70 167 82 291 236 342 425 16 58 18 119 18 560 0 444 -2 502 -18 560
+-69 254 -263 438 -511 485 -104 20 -1263 21 -1337 1z"/>
+                                        </g>
+                                    </svg>
+                                    Show All
                                     Categories</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="{{ path('app_category_new') }}">
-                                    Add New Categories</a>
+                                <a class="dropdown-item  d-flex align-items-center" href="{{ path('app_category_new') }}">
+                                    <i class="fa-solid fa-plus me-3" style="border-radius: 5px;
+                                    padding: 1px 2px;
+                                    border: 1px solid black;"></i> Add New Categories</a>
                             </li>
 
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <a class="dropdown-item" href="{{ path('app_sub_category_index') }}">Show All
+                                <a class="dropdown-item" href="{{ path('app_sub_category_index') }}">
+                                    <svg width="20px" height="20px" viewBox="0 0 512.000000 512.000000"
+                                         preserveAspectRatio="xMidYMid meet" class="me-3">
+
+                                        <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
+                                           fill="#000000" stroke="none">
+                                            <path d="M153 5024 c-56 -20 -118 -84 -137 -141 -24 -69 -24 -1065 -1 -1120
+26 -62 65 -104 121 -130 l52 -24 545 3 545 3 43 30 c24 17 57 50 74 74 l30 43
+3 545 3 545 -25 53 c-26 56 -73 99 -133 121 -58 20 -1061 18 -1120 -2z"/>
+                                            <path d="M1883 4628 c-46 -22 -45 -114 2 -132 9 -3 730 -6 1601 -6 l1585 0 24
+25 c30 29 32 64 6 96 l-19 24 -1589 2 c-1108 1 -1595 -1 -1610 -9z"/>
+                                            <path d="M1876 4138 c-36 -33 -39 -75 -6 -108 20 -20 33 -20 1614 -20 l1595 0
+20 26 c34 43 26 86 -20 109 -24 13 -240 15 -1603 15 l-1575 0 -25 -22z"/>
+                                            <path d="M205 3273 c-94 -22 -146 -62 -181 -138 l-24 -50 0 -525 0 -525 24
+-50 c27 -58 78 -107 133 -126 30 -11 147 -14 568 -14 523 0 531 0 570 21 54
+29 94 70 116 119 17 37 19 77 19 575 0 498 -2 538 -19 575 -22 49 -62 90 -116
+119 -39 21 -49 21 -555 23 -283 0 -524 -1 -535 -4z"/>
+                                            <path d="M1904 2873 c-53 -10 -75 -83 -39 -123 18 -20 27 -20 1616 -20 l1598
+0 20 26 c36 46 22 93 -33 114 -26 10 -3112 13 -3162 3z"/>
+                                            <path d="M1865 2370 c-25 -28 -23 -76 4 -103 l22 -22 1562 -3 c859 -1 1577 0
+1595 3 38 7 72 40 72 71 0 12 -9 33 -21 48 l-20 26 -1598 0 c-1589 0 -1598 0
+-1616 -20z"/>
+                                            <path d="M134 1486 c-28 -13 -63 -39 -77 -58 -58 -76 -57 -63 -57 -626 0 -583
+0 -579 71 -651 72 -71 69 -71 648 -71 405 1 524 4 554 14 60 22 107 65 133
+121 l25 53 -3 545 -3 545 -30 43 c-17 24 -50 57 -74 74 l-43 30 -546 3 -547 2
+-51 -24z"/>
+                                            <path d="M1870 1090 c-33 -33 -30 -75 6 -107 l25 -23 1575 0 c1363 0 1579 2
+1603 15 46 23 54 66 20 109 l-20 26 -1595 0 c-1581 0 -1594 0 -1614 -20z"/>
+                                            <path d="M1877 618 c-43 -33 -37 -107 11 -127 19 -8 470 -11 1610 -9 l1584 3
+19 24 c26 32 24 67 -6 96 l-24 25 -1589 0 c-1255 0 -1592 -3 -1605 -12z"/>
+                                        </g>
+                                    </svg>
+
+                                    Show All
                                     Sub-Categories</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="{{ path('app_sub_category_new') }}">
+                                <a class="dropdown-item  d-flex align-items-center" href="{{ path('app_sub_category_new') }}"><i
+                                            class="fa-solid fa-plus me-3 d-flex align-items-center" style="    border-radius: 5px;
+                                    padding: 1px 2px;
+                                    border: 1px solid black;"></i>
                                     Add New Sub-Categories</a>
                             </li>
 
