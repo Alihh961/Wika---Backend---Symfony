@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\SubCategory;
+use App\Form\SearchFormType;
 use App\Form\SubCategoryType;
 use App\Repository\SubCategoryRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -21,18 +22,36 @@ class SubCategoryController extends AbstractController
     {
     }
 
-    #[Route('/', name: 'app_sub_category_index', methods: ['GET'])]
-    public function index(SubCategoryRepository $subCategoryRepository , Request $request): Response
+    #[Route('/', name: 'app_sub_category_index', methods: ['GET', 'POST'])]
+    public function index(SubCategoryRepository $subCategoryRepository, Request $request): Response
     {
+        $subCategories = $subCategoryRepository->findAll();
 
-        $allSubCategories = $subCategoryRepository->findAll();
+        $inputValue = $request->query->get("q"); // get the value sent by ajax
+
+
+        if ($inputValue) {
+
+        $qb = $subCategoryRepository->getQbAll(); // queryBuilder
+
+            $qb->where("s.name like :value")
+                ->setParameter('value', "%" . $inputValue . "%");
+            $subCategories = $qb;
+        }
+
+
+        $form = $this->createForm(SearchFormType::class);
+        $form->handleRequest($request);
+
+
         $pagination = $this->paginator->paginate(
-            $allSubCategories,
-            $request->query->getInt("page",1),
+            $subCategories,
+            $request->query->getInt("page", 1),
             10
         );
         return $this->render('sub_category/index.html.twig', [
             'sub_categories' => $pagination,
+            'searchForm' => $form->createView(),
         ]);
     }
 
@@ -84,7 +103,7 @@ class SubCategoryController extends AbstractController
     #[Route('/{id}', name: 'app_sub_category_delete', methods: ['POST'])]
     public function delete(Request $request, SubCategory $subCategory, SubCategoryRepository $subCategoryRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$subCategory->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $subCategory->getId(), $request->request->get('_token'))) {
             $subCategoryRepository->remove($subCategory, true);
         }
 

@@ -4,6 +4,24 @@
 
 {% block body %}
     <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
+{#<p class="position-relative">{{ test }}</p>#}
+    {{ form_start(searchForm , {
+        "attr" : {
+            "class" : "position-relative"
+        }
+    }) }}
+
+    {{ form_label(searchForm.searchValue) }}
+    {{ form_widget(searchForm.searchValue , {
+        "attr" : {
+            "class" : "search-input"
+        }
+    }) }}
+
+    <button type="submit">Search</button>
+
+    {{ form_end(searchForm) }}
+
 
     <h1 class="w-fit mx-auto position-relative my-3">All SubCategories</h1>
 

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\SubCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +38,10 @@ class SubCategoryRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getQbAll():QueryBuilder {
+        return $this->createQueryBuilder("s");
     }
 
 //    /**
