@@ -12,7 +12,11 @@ class SearchFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('searchValue' , TextType::class)
+            ->add('searchValue' , TextType::class , [
+                "attr" => [
+                    "maxlength"=>8
+                ]
+            ])
         ;
     }
 

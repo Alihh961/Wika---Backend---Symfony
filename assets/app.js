@@ -6,24 +6,19 @@
  */
 
 // loads the jquery package from node_modules
+import "./bootstrap";
 
 const $ = require('jquery');
 import "./ajax";
 
 
 
-
-
-
-// create global $ and jQuery variables
-// global.$ = global.jQuery = $;
-
 // any CSS you import will output into a single css file (app.css in this case)
 import "./styles/app.scss";
 
 // start the Stimulus application
-import "./bootstrap";
 
+import "./errorTemplates";
 
 //importing fontawesome
 import "@fortawesome/fontawesome-free/js/fontawesome";

@@ -27,7 +27,6 @@ class SubCategoryController extends AbstractController
     {
         $subCategories = $subCategoryRepository->findAll();
 
-
         $form = $this->createForm(SearchFormType::class);
         $form->handleRequest($request);
 
