@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
-{#<p class="position-relative">{{ test }}</p>#}
+    {# <p class="position-relative">{{ test }}</p> #}
     {{ form_start(searchForm , {
         "attr" : {
             "class" : "position-relative"
@@ -20,6 +20,10 @@
 
     <button type="submit">Search</button>
 
+    <div class="tete">
+
+    </div>
+
     {{ form_end(searchForm) }}
 
 
@@ -27,20 +31,22 @@
 
     <table class="rwd-table position-relative">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>actions</th>
+        </tr>
         </thead>
-        <tbody>
+        <tbody class="tbody">
         {% for sub_category in sub_categories %}
             <tr>
-                <td>{{ sub_category.id }}</td>
-                <td>{{ sub_category.name }}</td>
+                <td class="subCategoriesId">{{ sub_category.id }}</td>
+                <td class="subCategoriesName">{{ sub_category.name }}</td>
                 <td class="d-flex justify-content-center align-items-center gap-2">
-                    <a href="{{ path('app_sub_category_show', {'id': sub_category.id}) }}" class="btn btn-warning">Show</a>
-                    <a href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}" class="custom-btn-edit">Edit</a>
+                    <a href="{{ path('app_sub_category_show', {'id': sub_category.id}) }}"
+                       class="btn btn-warning">Show</a>
+                    <a href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}"
+                       class="custom-btn-edit">Edit</a>
                     {{ include ("sub_category/_delete_form.html.twig") }}
                 </td>
             </tr>
@@ -61,7 +67,8 @@
         </tr>
         <tr>
             <td colspan="3">
-                <a href="{{ path('app_sub_category_new') }}" class="custom-btn-create mx-auto w-fit px-2">Create new SubCategory</a>
+                <a href="{{ path('app_sub_category_new') }}" class="custom-btn-create mx-auto w-fit px-2">Create new
+                    SubCategory</a>
             </td>
         </tr>
         </tbody>

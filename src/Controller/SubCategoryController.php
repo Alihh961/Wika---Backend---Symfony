@@ -27,18 +27,6 @@ class SubCategoryController extends AbstractController
     {
         $subCategories = $subCategoryRepository->findAll();
 
-        $inputValue = $request->query->get("q"); // get the value sent by ajax
-
-
-        if ($inputValue) {
-
-        $qb = $subCategoryRepository->getQbAll(); // queryBuilder
-
-            $qb->where("s.name like :value")
-                ->setParameter('value', "%" . $inputValue . "%");
-            $subCategories = $qb;
-        }
-
 
         $form = $this->createForm(SearchFormType::class);
         $form->handleRequest($request);
