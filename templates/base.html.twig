@@ -23,7 +23,9 @@
 		{% include "partials/header.html.twig" %}
 		<section class="position-relative white section px-5">
 		{% block body %}{% endblock %}
+			{% block footer %}
 		{% include "partials/footer.html.twig" %}
+			{% endblock footer %}
 		</section>
 	</body>
 </html>
