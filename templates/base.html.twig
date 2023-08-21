@@ -20,7 +20,10 @@
 		{% endblock %}
 	</head>
 	<body>
+	{% block header %}
 		{% include "partials/header.html.twig" %}
+	{%  endblock header %}
+
 		<section class="position-relative white section px-5">
 		{% block body %}{% endblock %}
 			{% block footer %}

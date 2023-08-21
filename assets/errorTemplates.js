@@ -2,8 +2,10 @@
 
 var pageX = $(document).width();
 var pageY = $(document).height();
-var mouseY=0;
-var mouseX=0;
+var mouseY= 0;
+var mouseX= 0;
+
+
 
 $(document).mousemove(function( event ) {
     //verticalAxis
@@ -14,10 +16,6 @@ $(document).mousemove(function( event ) {
     xAxis = -mouseX * 100 - 100;
 
     $('.box__ghost-eyes').css({ 'transform': 'translate('+ xAxis +'%,-'+ yAxis +'%)' });
-
-    console.log('X: ' + xAxis);
-    console.log('Y: ' + yAxis);
-
 
 });
 
