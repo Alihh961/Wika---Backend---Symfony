@@ -6,9 +6,9 @@
 @import "/assets/styles/partials/tables";
 @import "/assets/styles/partials/forms";
 @import "/assets/styles/partials/pagination";
-@import "/assets/styles/partials/error404";
-@import "/assets/styles/partials/error500";
-@import "/assets/styles/partials/error403";
+//@import "/assets/styles/partials/error404";
+//@import "/assets/styles/partials/error500";
+//@import "/assets/styles/partials/error403";
 
 
 
@@ -48,7 +48,7 @@ body {
 .section {
   background-color: #13101E;
   height: 100%;
-  min-height: 450px;
+  min-height: 100vh;
 }
 
 

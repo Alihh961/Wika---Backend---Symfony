@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Form\RolesFormType;
+use App\Form\SearchFormType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,10 +27,22 @@ class UserController extends AbstractController
     {
     }
 
-    #[Route('/', name: 'app_user_index', methods: ['GET'])]
+    #[Route('/', name: 'app_user_index', methods: ['GET' , 'POST'])]
     public function index(UserRepository $userRepository , Request $request): Response
     {
         $allUsers = $userRepository->findAll();
+
+        $form = $this->createForm(SearchFormType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $searchValue = $form->get("searchValue")->getData();
+            $searchBy = $form->get("searchBy")->getData();
+            if(!empty($searchValue)){
+                $allUsers = $userRepository->getQbAll( $searchValue,$searchBy);
+
+            }
+
+        }
         $pagination = $this->paginator->paginate(
             $allUsers,
             $request->query->getInt("page",1),
@@ -37,6 +50,7 @@ class UserController extends AbstractController
         );
         return $this->render('user/index.html.twig', [
             'users' => $pagination,
+            'searchForm'=>$form->createView(),
         ]);
     }
 

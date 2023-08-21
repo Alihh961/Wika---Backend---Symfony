@@ -4,6 +4,21 @@
 
 {% block body %}
     <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
+
+    {{ form_start(searchForm , {
+        "attr" : {
+        "class" : "position-relative"
+    }
+    }) }}
+    {{ form_label(searchForm.searchBy) }}
+    {{ form_widget(searchForm.searchBy) }}
+
+    {{ form_label(searchForm.searchValue) }}
+    {{ form_widget(searchForm.searchValue) }}
+
+    <button type="submit">Search</button>
+
+    {{ form_end(searchForm) }}
     <h1 class="position-relative w-fit mx-auto my-4">User index</h1>
 
     <table class="rwd-table w-100 position-relative">
