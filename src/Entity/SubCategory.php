@@ -18,7 +18,7 @@ class SubCategory
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups("apiSearch")]
+    #[Groups(["apiSearch" , "nft"])]
     private ?string $name = null;
 
 

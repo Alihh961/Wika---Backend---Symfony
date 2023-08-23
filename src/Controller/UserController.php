@@ -10,6 +10,7 @@ use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,6 +32,7 @@ class UserController extends AbstractController
     public function index(UserRepository $userRepository , Request $request): Response
     {
         $allUsers = $userRepository->findAll();
+
 
         $form = $this->createForm(SearchFormType::class);
         $form->handleRequest($request);
@@ -84,10 +86,13 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
-    public function show(User $user): Response
+    public function show(User $user , JWTTokenManagerInterface $JWTTokenManager): Response
     {
+        $token = $JWTTokenManager->create($user);
+
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            "token"=>$token,
         ]);
     }
 
