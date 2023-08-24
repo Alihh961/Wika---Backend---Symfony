@@ -6,12 +6,14 @@ use App\Repository\MediaRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\MappedSuperclass;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[MappedSuperclass]
 class Media
 {
     #[ORM\Column(length: 255)]
+    #[Groups("nft")]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]

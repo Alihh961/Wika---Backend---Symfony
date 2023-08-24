@@ -46,6 +46,10 @@ class Nft
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'nfts' ,cascade: ["persist"])]
     private Collection $users;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups("nft")]
+    private ?\DateTimeInterface $createdAt = null;
+
 
     public function __construct()
     {
@@ -189,6 +193,18 @@ class Nft
         if ($this->users->removeElement($user)) {
             $user->removeNft($this);
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

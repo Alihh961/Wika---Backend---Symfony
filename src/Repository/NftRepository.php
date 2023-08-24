@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Nft;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +38,18 @@ class NftRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findBySubCategoryName($subCategoryName):QueryBuilder{
+
+        return $this->createQueryBuilder("n")
+            ->join("n.subCategory" , 'sc')
+            ->where("sc.name = :name")
+            ->setParameter("name" , $subCategoryName);
+    }
+
+    public  function findAllBySubCategoryName():QueryBuilder{
+        return $this->createQueryBuilder("n");
     }
 
 //    /**
