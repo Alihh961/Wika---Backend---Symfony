@@ -13,12 +13,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Media
 {
     #[ORM\Column(length: 255)]
-    #[Groups("nft")]
+    #[Groups(["nft" , "nftBySlug"])]
     private ?string $name = null;
-
+    #[Groups(["nft" , "nftBySlug"])]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[Groups(["nft" , "nftBySlug"])]
     #[ORM\Column(length: 255)]
     private ?string $url = null;
 

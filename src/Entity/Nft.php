@@ -15,22 +15,22 @@ class Nft
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups("nft")]
+    #[Groups(["nft" , "nftBySlug"])]
     private ?int $id = null;
 
     #[ORM\ManyToMany(targetEntity: SubCategory::class, inversedBy: 'nfts' ,cascade: ['persist'])]
     #[Groups("nft")]
     private Collection $subCategory;
 
-    #[Groups("nft")]
+    #[Groups(["nft" , "nftBySlug"])]
     #[ORM\ManyToOne(inversedBy: 'nfts' ,cascade: ['persist', 'remove'])]
     private ?Image $image = null;
 
-    #[Groups("nft")]
+    #[Groups(["nft" , "nftBySlug"])]
     #[ORM\ManyToOne(inversedBy: 'nfts' ,cascade: ['persist', 'remove'])]
     private ?Video $video = null;
 
-    #[Groups("nft")]
+    #[Groups(["nft" , "nftBySlug"])]
     #[ORM\ManyToOne(inversedBy: 'nfts' ,cascade: ['persist', 'remove'])]
     private ?Audio $audio = null;
 
@@ -38,16 +38,15 @@ class Nft
     #[ORM\ManyToMany(targetEntity: Transaction::class, mappedBy: 'nfts')]
     private Collection $transactions;
 
-    #[Groups("nft")]
+    #[Groups(["nft" , "nftBySlug"])]
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $price = null;
 
-    #[Groups("nft")]
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'nfts' ,cascade: ["persist"])]
     private Collection $users;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups("nft")]
+    #[Groups(["nft" , "nftBySlug"])]
     private ?\DateTimeInterface $createdAt = null;
 
 
