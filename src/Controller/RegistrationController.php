@@ -19,10 +19,11 @@ class RegistrationController extends AbstractController
     {
 
         //redirect to home page if the user is logged in
-        if($this->getUser()){
+        if ($this->getUser()) {
 
             return $this->redirectToRoute("app_home");
         }
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);

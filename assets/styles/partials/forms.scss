@@ -14,12 +14,24 @@
   }
 
 .bg-image{
-  background-image:url("//bestnft.today/wp-content/uploads/2023/02/monterajpg08.jpg");
+  //background: linear-gradient(180deg, rgba(50, 70, 80, .9) 0%, rgb(13, 16, 27) 100%);
   background-position: center center;
   background-repeat: no-repeat;
-  background-size: 100% auto;
-  height: 100%;
+  background-image:url("../../../public/build/images/bg.jpg");
+  background-size: 100% 100%;
+  min-height: 100%;
   width: 100%;
+  &:before{
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    width: 100%;
+    opacity: 0.3;
+    content: "";
+    background: linear-gradient(180deg, rgb(0 78 117 / 90%) 0%, rgb(0 0 0) 100%) no-repeat;
+  }
+
 }
 
 // Add new nft form

@@ -1,12 +1,12 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary w-100 top-0 p-3 header">
-    <div class="container-fluid">
-        <div class="d-flex gap-5">
-            <a class="navbar-brand" href="{{ path('app_home') }}"><img
+<nav class="navbar navbar-expand-lg bg-body-tertiary w-20 position-fixed flex-column h-100 p-3 header">
+    <div class="container-fluid flex-column">
+        <div class="d-flex gap-5 flex-column">
+            <a class="navbar-brand d-block w-fit m-auto" href="{{ path('app_home') }}"><img
                         src="{{ asset('build/images/WIKA_Logo.png') }}"
                         class="logo"></a>
 
             {% if is_granted("ROLE_ADMIN") %}
-                <ul class="navbar-nav">
+                <ul class="navbar-nav flex-column gap-5">
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="{{ path('app_home') }}">Home</a>
                     </li>
@@ -160,7 +160,8 @@ l650 0 67 33 c76 37 120 82 157 162 l26 55 3 618 c2 509 0 634 -12 704 -27
                                     Categories</a>
                             </li>
                             <li>
-                                <a class="dropdown-item  d-flex align-items-center" href="{{ path('app_category_new') }}">
+                                <a class="dropdown-item  d-flex align-items-center"
+                                   href="{{ path('app_category_new') }}">
                                     <i class="fa-solid fa-plus me-3" style="border-radius: 5px;
                                     padding: 1px 2px;
                                     border: 1px solid black;"></i> Add New Categories</a>
@@ -207,7 +208,8 @@ l650 0 67 33 c76 37 120 82 157 162 l26 55 3 618 c2 509 0 634 -12 704 -27
                                     Sub-Categories</a>
                             </li>
                             <li>
-                                <a class="dropdown-item  d-flex align-items-center" href="{{ path('app_sub_category_new') }}"><i
+                                <a class="dropdown-item  d-flex align-items-center"
+                                   href="{{ path('app_sub_category_new') }}"><i
                                             class="fa-solid fa-plus me-3 d-flex align-items-center" style="    border-radius: 5px;
                                     padding: 1px 2px;
                                     border: 1px solid black;"></i>
@@ -220,14 +222,16 @@ l650 0 67 33 c76 37 120 82 157 162 l26 55 3 618 c2 509 0 634 -12 704 -27
 
             {% endif %}
         </div>
-        <div>
+        <div class="mt-5">
             {% if(app.user) %}
-                <a class="btn btn-primary" href="{{ path('app_logout') }}">Logout</a>
+                <a class="btn btn-primary d-block mx-auto" href="{{ path('app_logout') }}">Logout</a>
+                <p class="text-center mt-3 loggedAs">Logged in as <span>{{ app.user.firstName }} {{ app.user.lastName }}</span></p>
             {% else %}
                 <a class="btn btn-primary" href="{{ path('app_login') }}">Login</a>
 
                 <a class="btn btn-register" href="{{ path('app_register') }}">Register</a>
             {% endif %}
+
         </div>
     </div>
 

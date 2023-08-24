@@ -25,10 +25,10 @@
         ) }}
 
         <div class="row">
-            {% if not form.vars.valid %}
+            {% if not registrationForm.vars.valid %}
                 <div class="alert alert-danger col-12">
-                    {{ form_errors(form) }}
-                    {% for children in form.children %}
+                    {{ form_errors(registrationForm) }}
+                    {% for children in registrationForm.children %}
                         {% if not children.vars.valid %}
                             {{ form_errors(children) }}
                         {% endif %}

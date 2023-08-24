@@ -1,8 +1,26 @@
 @import "~bootstrap/scss/bootstrap";
 
 .header{
-    background-image: linear-gradient(to top, #b3ffab 0%, #12fff7 100%);
+    background-color: #1d2835f2!important;
     z-index: 100;
+    color: white;
+    font-size: large;
+    ul {
+        li{
+            a.nav-link{
+                color: white;
+            }
+        }
+    }
+
+    .loggedAs {
+        color: cadetblue;
+        font-size: 14px;
+        span{
+            text-decoration: underline;
+            color: white;
+        }
+    }
 }
 
 .btn-register{
