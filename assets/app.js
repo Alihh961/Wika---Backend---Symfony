@@ -89,8 +89,8 @@ function checkInputValuesOnLoad() { // check if the input have a value on load ,
     }
 
 };
-checkInputValues();
-checkInputValuesOnLoad();
+// checkInputValues();
+// checkInputValuesOnLoad();
 
 
 
@@ -121,8 +121,21 @@ function addBorders() {
 
     }
 }
-addBorders();
+// addBorders();
 
+
+// Show list of options onclick in navbar with transition
+
+let showClicks = document.querySelectorAll("[data-bs-toggle='showClick']");
+showClicks.forEach( (showClick)=>{
+    showClick.addEventListener("click" , ()=>{
+
+        let divToShow = showClick.nextElementSibling;
+
+        divToShow.classList.toggle("showDiv");
+    })
+
+})
 
 
 

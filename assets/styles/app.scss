@@ -77,7 +77,21 @@ body {
 }
 
 
+[data-bs-toggle='showClick']{
+display: block;
+  padding-left: 10px;
+}
 
+.hiddenDiv{
+  height: 0px;
+  width: 100%;
+  transition: 0.5s;
+  overflow: hidden;
+}
+
+.showDiv{
+  height: 100px;
+}
 
 
 
