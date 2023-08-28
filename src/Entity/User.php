@@ -51,7 +51,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $nfts;
 
     #[ORM\Column]
-    private ?bool $isVerified = null;
+    private ?bool $isVerified = false;
+
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?VerifyEmail $verifyEmail = null;
 
     public function __construct()
     {
@@ -225,6 +228,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getVerifyEmail(): ?VerifyEmail
+    {
+        return $this->verifyEmail;
+    }
+
+    public function setVerifyEmail(VerifyEmail $verifyEmail): static
+    {
+        // set the owning side of the relation if necessary
+        if ($verifyEmail->getUser() !== $this) {
+            $verifyEmail->setUser($this);
+        }
+
+        $this->verifyEmail = $verifyEmail;
 
         return $this;
     }

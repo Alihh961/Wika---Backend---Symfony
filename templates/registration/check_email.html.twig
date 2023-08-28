@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Verify Email
+{% endblock %}
+
+
+{% block body %}
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
+    <h1 class="text-center position-relative w-fit mx-auto my-5">Email Verification</h1>
+
+   <p class="position-relative my-3">{{ text }}</p>
+
+    {% if displayForm == true %}
+
+    {{ form_start(form , {"attr" : {
+        "class" :
+            "position-relative"
+        }
+    }) }}
+
+    {{ form_widget(form) }}
+
+    <button type="submit">Submit</button>
+
+    {{ form_end(form) }}
+
+    {% endif %}
+
+{% endblock body %}
