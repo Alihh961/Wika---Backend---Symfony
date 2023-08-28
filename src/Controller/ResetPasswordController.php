@@ -6,15 +6,13 @@ use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
@@ -27,7 +25,8 @@ class ResetPasswordController extends AbstractController
 
     public function __construct(
         private ResetPasswordHelperInterface $resetPasswordHelper,
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
+        private HttpClientInterface $httpClient
     ) {
     }
 
@@ -35,16 +34,14 @@ class ResetPasswordController extends AbstractController
      * Display & process form to request a password reset.
      */
     #[Route('', name: 'app_forgot_password_request')]
-    public function request(Request $request, MailerInterface $mailer, TranslatorInterface $translator): Response
+    public function request(Request $request): Response
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->processSendingPasswordResetEmail(
-                $form->get('email')->getData(),
-                $mailer,
-                $translator
+                $form->get('email')->getData()
             );
         }
 
@@ -76,6 +73,7 @@ class ResetPasswordController extends AbstractController
     #[Route('/reset/{token}', name: 'app_reset_password')]
     public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator, string $token = null): Response
     {
+
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
@@ -85,6 +83,8 @@ class ResetPasswordController extends AbstractController
         }
 
         $token = $this->getTokenFromSession();
+
+
         if (null === $token) {
             throw $this->createNotFoundException('No reset password token found in the URL or in the session.');
         }
@@ -129,7 +129,7 @@ class ResetPasswordController extends AbstractController
         ]);
     }
 
-    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer, TranslatorInterface $translator): RedirectResponse
+    private function processSendingPasswordResetEmail(string $emailFormData): RedirectResponse
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
@@ -156,17 +156,34 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_check_email');
         }
 
-        $email = (new TemplatedEmail())
-            ->from(new Address('hajhassan.ali@outlook.com', '"Wika Woo"'))
-            ->to($user->getEmail())
-            ->subject('Your password reset request')
-            ->htmlTemplate('reset_password/email.html.twig')
-            ->context([
-                'resetToken' => $resetToken,
-            ])
+
+        $resetLink = 'https://127.0.0.1:8000/reset-password/reset/'. $resetToken->getToken();
+
+        $this->httpClient->request('POST', "https://api.brevo.com/v3/smtp/email", [
+            'headers' => [
+                'accept' => 'application/json',
+                'api-key' => "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",
+                'content-type' => 'application/json'
+            ],
+            'json' => [
+                "sender" => [
+                    'name' => "Wika-WOO",
+                    'email' => "no-reply-resetpassword@wika.com"
+                ],
+                "to" => [
+                    [
+                        'email' => $user->getEmail(),
+                        'name' => $user->getEmail()
+                    ],
+
+                ],
+                "subject" => "Reset Your Password!",
+                "htmlContent" => "<a href='{$resetLink}'>Click here to reset the password</a>"
+            ]
+        ]);
+
         ;
 
-        $mailer->send($email);
 
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);
