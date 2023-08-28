@@ -6,7 +6,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ResetPasswordRequestFormType extends AbstractType
 {
@@ -14,12 +16,16 @@ class ResetPasswordRequestFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'attr' => ['autocomplete' => 'email'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter your email',
+                "constraints" => [
+                    new Email([]),
+                    new Regex([
+                        "pattern" => '/^[^@\t\r\n]+@[^@\t\r\n]+\.[^@\t\r\n]+$/',
+                        "message" => "Email: At least 8 characters with at least one Capital letter,one Small letter,one Number and one Special Char"
                     ]),
-                ],
+                    new NotBlank([
+                        'message' => 'Please enter an Email',
+                    ]),
+                ]
             ])
         ;
     }

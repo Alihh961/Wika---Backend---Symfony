@@ -162,7 +162,7 @@ class ResetPasswordController extends AbstractController
         $this->httpClient->request('POST', "https://api.brevo.com/v3/smtp/email", [
             'headers' => [
                 'accept' => 'application/json',
-                'api-key' => "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",
+                'api-key' => "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",
                 'content-type' => 'application/json'
             ],
             'json' => [

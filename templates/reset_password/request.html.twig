@@ -3,20 +3,28 @@
 {% block title %}Reset your password{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-    <h1>Reset your password</h1>
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
 
-    {{ form_start(requestForm) }}
-        {{ form_row(requestForm.email) }}
-        <div>
+    {% for flash_error in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger position-relative" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    <h1 class="w-fit mx-auto my-3 position-relative ">Reset your password</h1>
+
+    {{ form_start(requestForm, { "attr": { "class": "mx-auto w-50 my-5" } }) }}
+
+    <div class="d-flex justify-content-evenly align-items-center position-relative">
+    {{ form_label(requestForm.email ) }}
+
+    {{ form_widget(requestForm.email , { "attr" : { "class" : "reset-input"}} ) }}
+    </div>
+
+        <div class="my-3 position-relative">
             <small>
                 Enter your email address and we will send you a
                 link to reset your password.
             </small>
         </div>
 
-        <button class="btn btn-primary">Send password reset email</button>
+        <button class="btn btn-primary w-fit d-block m-auto position-relative">Send password reset email</button>
     {{ form_end(requestForm) }}
 {% endblock %}

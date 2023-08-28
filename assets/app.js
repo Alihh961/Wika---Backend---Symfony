@@ -89,8 +89,8 @@ function checkInputValuesOnLoad() { // check if the input have a value on load ,
     }
 
 };
-// checkInputValues();
-// checkInputValuesOnLoad();
+checkInputValues();
+checkInputValuesOnLoad();
 
 
 

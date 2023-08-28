@@ -3,10 +3,22 @@
 {% block title %}Reset your password{% endblock %}
 
 {% block body %}
-    <h1>Reset your password</h1>
 
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
+    <div class="bg-image position-absolute top-0 start-0 opacity-50"></div>
+
+    <h1 class="position-relative w-fit mx-auto my-3">Reset your password</h1>
+
+    {{ form_start(resetForm , {"attr" : { "class" : "position-relative w-50 mx-auto" }}) }}
+    <table>
+        {% for child in resetForm.plainPassword.children %}
+            <tr class="">
+                <td>{{ form_label(child ) }}</td>
+                <td>{{ form_widget(child , { "attr" : { "class" : "my-3 reset-input"}} ) }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <button class="btn btn-primary w-fit d-block mx-auto my-3">Reset password</button>
     {{ form_end(resetForm) }}
+
 {% endblock %}
