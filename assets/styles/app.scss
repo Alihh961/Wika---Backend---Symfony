@@ -31,6 +31,18 @@ body {
   flex-direction: column;
 
 
+  &::-webkit-scrollbar-track {
+  display: none;
+  }
+
+  &::-webkit-scrollbar {
+display: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+display: none ;
+  }
+
 }
 
 * {
@@ -73,25 +85,16 @@ body {
 }
 
 .dropdown-item:hover {
-  background-color: #c0c0c0 !important;
+  background-color: #967575 !important;
 }
 
-
 [data-bs-toggle='showClick']{
-display: block;
+  display: block;
   padding-left: 10px;
 }
 
-.hiddenDiv{
-  height: 0px;
-  width: 100%;
-  transition: 0.5s;
-  overflow: hidden;
-}
 
-.showDiv{
-  height: 100px;
-}
+
 
 
 .reset-input{
