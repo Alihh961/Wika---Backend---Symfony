@@ -45,6 +45,11 @@ security:
                 path: app_logout
             custom_authenticator: App\Security\AppCustomAuthenticator
 
+            remember_me:
+                name: SECURITY_DEMO
+                secret: '%kernel.secret%'
+                lifetime: 604800
+
     role_hierarchy:
             ROLE_ADMIN:       ROLE_USER
             ROLE_SUPER_ADMIN : ROLE_ADMIN

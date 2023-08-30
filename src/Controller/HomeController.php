@@ -20,6 +20,8 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index( Security $security): Response
     {
+
+
         $user = $security->getUser();
 
         $response = $this->httpClient->request("GET" , "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,JPY,EUR");
