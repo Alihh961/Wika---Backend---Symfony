@@ -208,7 +208,8 @@ l650 0 67 33 c76 37 120 82 157 162 l26 55 3 618 c2 509 0 634 -12 704 -27
             {% if(app.user) %}
                 <a class="btn btn-primary d-block mx-auto" href="{{ path('app_logout') }}">Logout</a>
                 <p class="text-center mt-3 loggedAs">Logged in as
-                    <span>{{ app.user.firstName }} {{ app.user.lastName }}</span></p>
+                    <br>
+                    <span>{{ app.user.firstName |capitalize }} {{ app.user.lastName | title  }}</span></p>
             {% else %}
                 <a class="btn btn-primary " href="{{ path('app_login') }}">Login</a>
 

@@ -19,33 +19,54 @@ class ApiNftController extends AbstractController
     #[Route("api/nft", methods: ['GET'])]
     public function bySubCategoryName(NftRepository $nftRepository, Request $request): Response
     {
-        $subCategoryName = $request->query->get("s") ? str_replace("-", " ", $request->query->get("v")) : "";
-        $orderBy = $request->query->get("o") ? str_replace("-", " ", $request->query->get("o")) : "";
+
+        $subCategoryName = $request->query->get("s") ? str_replace("-", " ", $request->query->get("s")) : "";
+        $searchByImageName = $request->query->get("n") ? str_replace("-", " ", $request->query->get("n")) : null;
+        $orderBy = $request->query->get("o") ? str_replace("-", " ", $request->query->get("o")) : null;
+
 
         if ($subCategoryName === "all" || $subCategoryName === "") { // selecting all nft if no para set or set to all for subcategories
-            if ($orderBy == "asc" || $orderBy == "desc") { // if an order by is specified
 
-                $nfts = $nftRepository->findAllBySubCategoryName()
-                    ->orderBy("n.createdAt", $orderBy)
-                    ->getQuery()
+            if ($searchByImageName != null || $orderBy != null) {
+                $qb = $nftRepository->createQueryBuilder("n");
+                if ($searchByImageName != null) {
+
+                    $qb = $qb->join("n.image", "i")
+                        ->where("i.name LIKE :imageName")
+                        ->setParameter("imageName", "%" . $searchByImageName . "%");
+                }
+
+
+                if ($orderBy === "asc" ||$orderBy === "desc") { // if an order by is specified
+
+                    $qb->orderBy("n.createdAt", $orderBy);
+
+                }
+
+                $nfts = $qb->getQuery()
                     ->getResult();
-            } else { // if no order by is specified
+
+            } else { // if no order by is specified or name
                 $nfts = $nftRepository->findAll();
             }
         } else { //selecting nft of certian subCAtegory
-            if ($orderBy == "asc" || $orderBy == "desc") { // if an order by is specified
-                $nfts = $nftRepository->findBySubCategoryName($subCategoryName)
-                    ->orderBy("n.createdAt", $orderBy)
-                    ->getQuery()
-                    ->getResult();
-            } else { // if no order by is specified
-                $nfts = $nftRepository->findBySubCategoryName($subCategoryName)
-                    ->getQuery()
-                    ->getResult();
+            $qb = $nftRepository->createQueryBuilder("n")
+                ->join("n.subCategory", "s")
+                ->where("s.name = :subName")
+                ->setParameter("subName", $subCategoryName);
+            if ($searchByImageName) {
+                $qb = $qb->join("n.image", "i")
+                    ->where("i.name = imageName")
+                    ->setParameter("imageName", $searchByImageName);
             }
 
-        }
+            if ($orderBy == "asc" || $orderBy == "desc") { // if an order by is specified
+                $qb = $qb->orderBy("n.createdAt", $orderBy);
+            }
 
+            $nfts = $qb->getQuery()->getResult();
+
+        }
 
         if (count($nfts) > 0) { // avoiding passing wrong parameters in url
             return $this->json($nfts, context: ["groups" => ["nft"]]);
@@ -55,7 +76,6 @@ class ApiNftController extends AbstractController
 
 
     }
-
 
 
     // Selecting a specific NFT according to name of its media using slug
@@ -93,15 +113,14 @@ class ApiNftController extends AbstractController
     }
 
 
-
     // Selecting a specific Nft according to its ID
     #[Route("api/nft/show/{id}", methods: ['GET'])]
-    public function showByID(Request $request , NftRepository $nftRepository ,String $id)
+    public function showByID(Request $request, NftRepository $nftRepository, string $id)
     {
 
-        if($id != ""){
+        if ($id != "") {
             $nft = $nftRepository->find($id);
-            return $this->json($nft ,context: ["groups" => ["nft"]]);
+            return $this->json($nft, context: ["groups" => ["nft"]]);
         }
         return $this->json("No result found");
 

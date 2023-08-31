@@ -13,15 +13,18 @@ class ApiSubCategoryController extends AbstractController
     #[Route('/api/sub-category', name: 'app_api_sub_category')]
     public function index(Request $request, SubCategoryRepository $subCategoryRepository): Response
     {
-        $inputValue = $request->query->get("v"); // get the value sent by ajax
+        $inputValue = $request->query->get("v"); // get the value sent
 
-        $qb = $subCategoryRepository->getQbAll()
-            ->where("s.name like :value")
-            ->setParameter('value', "%" . $inputValue . "%");
+        if ($inputValue === "all" || $inputValue === null) {
+            $subCategories = $subCategoryRepository->findAll();
+        } else {
+            $qb = $subCategoryRepository->getQbAll()
+                ->where("s.name like :value")
+                ->setParameter('value', "%" . $inputValue . "%");
 
-        $subCategories = $qb->getQuery()->getResult();
+            $subCategories = $qb->getQuery()->getResult();
+        }
 
-
-        return $this->json($subCategories , context: ["groups" =>["apiSearch"]]);
+        return $this->json($subCategories, context: ["groups" => ["apiSearch"]]);
     }
 }
