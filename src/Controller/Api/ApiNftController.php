@@ -12,17 +12,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+#[Route("api/")]
 class ApiNftController extends AbstractController
 {
 
-    //filtering the NFTs according to the name of its subCategories
-    #[Route("api/nft", methods: ['GET'])]
+    //filtering the NFTs according to the name of its subCategories | image name and order by created date
+    #[Route("nfts", methods: ['GET'])]
     public function bySubCategoryName(NftRepository $nftRepository, Request $request): Response
     {
 
         $subCategoryName = $request->query->get("s") ? str_replace("-", " ", $request->query->get("s")) : "";
         $searchByImageName = $request->query->get("n") ? str_replace("-", " ", $request->query->get("n")) : null;
-        $orderBy = $request->query->get("o") ? str_replace("-", " ", $request->query->get("o")) : null;
+        $orderBy = $request->query->get("o") ? : null;
 
 
         if ($subCategoryName === "all" || $subCategoryName === "") { // selecting all nft if no para set or set to all for subcategories
@@ -78,8 +79,23 @@ class ApiNftController extends AbstractController
     }
 
 
+    // Selecting a nft by its id
+    #[Route("nft")]
+    public function byId(Request $request , NftRepository $nftRepository):Response{
+        $nftId = $request->query->get("i");
+        $nft = $nftRepository->find($nftId) ? : "";
+
+        if($nft){
+            return $this->json($nft, context: ["groups" => ["nft"]]);
+
+        }else{
+            return $this->json("No results found.");
+        }
+
+    }
+
     // Selecting a specific NFT according to name of its media using slug
-    #[Route("api/nft/{slug}", methods: ["GET"])]
+    #[Route("nft/{slug}", methods: ["GET"])]
     public function byMediaName(NftRepository   $nftRepository, SluggerInterface $slugger, string $slug,
                                 ImageRepository $imageRepository, VideoRepository $videoRepository, AudioRepository $audioRepository)
     {
@@ -114,7 +130,7 @@ class ApiNftController extends AbstractController
 
 
     // Selecting a specific Nft according to its ID
-    #[Route("api/nft/show/{id}", methods: ['GET'])]
+    #[Route("nft/show/{id}", methods: ['GET'])]
     public function showByID(Request $request, NftRepository $nftRepository, string $id)
     {
 
