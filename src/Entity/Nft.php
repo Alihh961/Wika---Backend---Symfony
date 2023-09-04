@@ -26,14 +26,6 @@ class Nft
     #[ORM\ManyToOne(inversedBy: 'nfts' ,cascade: ['persist', 'remove'])]
     private ?Image $image = null;
 
-    #[Groups(["nft" , "nftBySlug"])]
-    #[ORM\ManyToOne(inversedBy: 'nfts' ,cascade: ['persist', 'remove'])]
-    private ?Video $video = null;
-
-    #[Groups(["nft" , "nftBySlug"])]
-    #[ORM\ManyToOne(inversedBy: 'nfts' ,cascade: ['persist', 'remove'])]
-    private ?Audio $audio = null;
-
 
     #[ORM\ManyToMany(targetEntity: Transaction::class, mappedBy: 'nfts')]
     private Collection $transactions;

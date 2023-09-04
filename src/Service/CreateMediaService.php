@@ -41,18 +41,10 @@ class CreateMediaService
         );
 
 
-        if ($fileType == "image") {
+
             $mediaEntity = new Image();
-        } else if ($fileType == "video") {
-            $mediaEntity = new Video();
-            $mediaEntity->setDuration(50);
-        } else if ($fileType == "audio") {
-            $mediaEntity = new Audio();
-            $mediaEntity->setDuration(50);
-        }
 
-
-        $mediaEntity->setFormat($ext);
+          $mediaEntity->setFormat($ext);
         $mediaEntity->setUrl($newFileName);
         $mediaEntity->setDescription($description);
         $mediaEntity->setSize($size);

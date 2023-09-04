@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Nft;
 use App\Repository\AudioRepository;
 use App\Repository\ImageRepository;
 use App\Repository\NftRepository;
@@ -21,9 +22,11 @@ class ApiNftController extends AbstractController
     public function bySubCategoryName(NftRepository $nftRepository, Request $request): Response
     {
 
+
         $subCategoryName = $request->query->get("s") ? str_replace("-", " ", $request->query->get("s")) : "";
         $searchByImageName = $request->query->get("n") ? str_replace("-", " ", $request->query->get("n")) : null;
-        $orderBy = $request->query->get("o") ? : null;
+        $maxNumberOfNfts = $request->query->get('m') ?: null;
+        $orderBy = $request->query->get("o") ?: null;
 
 
         if ($subCategoryName === "all" || $subCategoryName === "") { // selecting all nft if no para set or set to all for subcategories
@@ -38,23 +41,28 @@ class ApiNftController extends AbstractController
                 }
 
 
-                if ($orderBy === "asc" ||$orderBy === "desc") { // if an order by is specified
+                if ($orderBy === "asc" || $orderBy === "desc") { // if an order by is specified
 
                     $qb->orderBy("n.createdAt", $orderBy);
 
                 }
 
-                $nfts = $qb->getQuery()
+                $nfts = $qb->setMaxResults($str)
+                    ->getQuery()
                     ->getResult();
 
             } else { // if no order by is specified or name
-                $nfts = $nftRepository->findAll();
+                $nfts = $nftRepository->createQueryBuilder("n")
+                    ->setMaxResults($maxNumberOfNfts)
+                    ->getQuery()
+                    ->getResult();
             }
         } else { //selecting nft of certian subCAtegory
             $qb = $nftRepository->createQueryBuilder("n")
                 ->join("n.subCategory", "s")
                 ->where("s.name = :subName")
-                ->setParameter("subName", $subCategoryName);
+                ->setParameter("subName", $subCategoryName)
+                ->setMaxResults($maxNumberOfNfts);
             if ($searchByImageName) {
                 $qb = $qb->join("n.image", "i")
                     ->where("i.name = imageName")
@@ -62,7 +70,8 @@ class ApiNftController extends AbstractController
             }
 
             if ($orderBy == "asc" || $orderBy == "desc") { // if an order by is specified
-                $qb = $qb->orderBy("n.createdAt", $orderBy);
+                $qb = $qb->orderBy("n.createdAt", $orderBy)
+                    ->setMaxResults($maxNumberOfNfts);
             }
 
             $nfts = $qb->getQuery()->getResult();
@@ -81,14 +90,15 @@ class ApiNftController extends AbstractController
 
     // Selecting a nft by its id
     #[Route("nft")]
-    public function byId(Request $request , NftRepository $nftRepository):Response{
+    public function byId(Request $request, NftRepository $nftRepository): Response
+    {
         $nftId = $request->query->get("i");
-        $nft = $nftRepository->find($nftId) ? : "";
+        $nft = $nftRepository->find($nftId) ?: "";
 
-        if($nft){
+        if ($nft) {
             return $this->json($nft, context: ["groups" => ["nft"]]);
 
-        }else{
+        } else {
             return $this->json("No results found.");
         }
 
@@ -141,5 +151,15 @@ class ApiNftController extends AbstractController
         return $this->json("No result found");
 
 
+    }
+
+    #[Route("nftsquantity")]
+    public function getTotalQuantity(NftRepository $nftRepository): Response
+    {
+
+        $nfts = $nftRepository->findAll();
+        $quantity = count($nfts);
+
+        return new Response($quantity);
     }
 }
