@@ -93,29 +93,6 @@ class Nft
         return $this;
     }
 
-    public function getVideo(): ?Video
-    {
-        return $this->video;
-    }
-
-    public function setVideo(?Video $video): static
-    {
-        $this->video = $video;
-
-        return $this;
-    }
-
-    public function getAudio(): ?Audio
-    {
-        return $this->audio;
-    }
-
-    public function setAudio(?Audio $audio): static
-    {
-        $this->audio = $audio;
-
-        return $this;
-    }
 
 
     /**

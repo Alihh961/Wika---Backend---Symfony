@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
 class Address
@@ -14,26 +15,33 @@ class Address
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["user"])]
     private ?int $id = null;
 
+    #[Groups(["user"])]
     #[ORM\Column(length: 35)]
     private ?string $municipality = null;
 
+    #[Groups(["user"])]
     #[ORM\Column(length: 35)]
     private ?string $department = null;
 
+    #[Groups(["user"])]
     #[ORM\Column(length: 35)]
     private ?string $region = null;
 
+    #[Groups(["user"])]
     #[ORM\Column(length: 70)]
     private ?string $path = null;
 
+    #[Groups(["user"])]
     #[ORM\Column(length: 15)]
     private ?string $buildingNumber = null;
 
     #[ORM\OneToMany(mappedBy: 'address', targetEntity: User::class)]
     private Collection $users;
 
+    #[Groups(["user"])]
     #[ORM\Column]
     private ?int $postCode = null;
 

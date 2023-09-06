@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ApiSubCategoryController extends AbstractController
 {
-    #[Route('/api/sub-category', name: 'app_api_sub_category')]
+    #[Route('/api/sub-category', name: 'api_sub_category')]
     public function index(Request $request, SubCategoryRepository $subCategoryRepository): Response
     {
         $inputValue = $request->query->get("v"); // get the value sent
@@ -27,4 +27,5 @@ class ApiSubCategoryController extends AbstractController
 
         return $this->json($subCategories, context: ["groups" => ["apiSearch"]]);
     }
+
 }

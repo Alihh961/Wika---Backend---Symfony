@@ -30,11 +30,11 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            # form_login:
+#            form_login:
             #     # "app_login" is the name of the route created previously
             #     login_path: app_login
             #     check_path: app_login
-            #     enable_csrf: true
+#                enable_csrf: true
 
             # The maximum login attempts
             login_throttling:
@@ -67,7 +67,6 @@ security:
          - { path: ^/register, roles: PUBLIC_ACCESS }
          - { path: ^/admin , roles: ROLE_ADMIN }
          - { path: ^/super-admin , roles: ROLE_SUPER_ADMIN }
-
 when@test:
     security:
         password_hashers:
