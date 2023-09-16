@@ -4,13 +4,14 @@ namespace App\Controller\Api;
 
 use App\Entity\Address;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-use Date;
 class ApiUserController extends AbstractController
 {
     #[Route('/api/user', name: 'app_api_user')]
@@ -20,10 +21,17 @@ class ApiUserController extends AbstractController
         return $this->json($this->getUser(), context: ['groups' => ['user']]);
     }
 
-    #[Route('/api/user/add' ,name: 'app_api_user_add')]
-    public function setUser(Request $request)
+    #[Route('/api/register', name: 'app_api_user_add')]
+    public function setUser(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager)
     {
-        $data = json_decode($request->getContent(),true);
+        $data = json_decode($request->getContent(), true);
+
+
+        if ($data["password"] != $data["confPassword"]) {
+            throw new \Exception("Password doesn't match!");
+
+        }
+
 
         $user = new User();
         $user->setFirstName($data["firstName"]);
@@ -42,9 +50,24 @@ class ApiUserController extends AbstractController
 
         $user->setAddress($address);
 
+        //we hash the password received
+        $passwordReceived = $data["password"];
+        $hashedPassword = $userPasswordHasher->hashPassword(
+            $user,
+            $passwordReceived
+        );
 
-        dd($user);
+        $user->setPassword($hashedPassword);
+        try {
+            $entityManager->persist($user);
+            $entityManager->flush();
+        } catch (\Exception $exception) {
+            throw new HttpException(400, "User Already Exists");
+        }
 
-        return new JsonResponse($u);
+
+        return $this->json(['message' => 'Your account has been created, please check your inbox to validate your account!'], 200);
     }
+
+
 }
