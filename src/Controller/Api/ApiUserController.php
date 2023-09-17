@@ -21,7 +21,7 @@ class ApiUserController extends AbstractController
         return $this->json($this->getUser(), context: ['groups' => ['user']]);
     }
 
-    #[Route('/api/register', name: 'app_api_user_add')]
+    #[Route('/api/register', name: 'app_api_user_add' , methods : ["POST"])]
     public function setUser(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager)
     {
         $data = json_decode($request->getContent(), true);
