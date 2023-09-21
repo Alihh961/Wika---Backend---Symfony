@@ -95,7 +95,11 @@
 .showDiv {
   height: 100px;
 
-  &.more {
+  &.more-media{
+    height: 80px !important;
+  }
+
+  &.more-sub {
     height: 175px !important;
   }
 
