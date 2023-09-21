@@ -2,6 +2,9 @@
 
 namespace App\Command;
 
+use App\Entity\Eth;
+use App\Repository\EthRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,7 +21,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class GetEthRateCommand extends Command
 {
 
-    public function __construct(private HttpClientInterface $httpClient)
+    public function __construct(private HttpClientInterface $httpClient ,
+    private EntityManagerInterface $entityManager)
     {
         parent::__construct();
     }
@@ -34,6 +38,16 @@ class GetEthRateCommand extends Command
         $response = $this->httpClient->request("GET" , "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=EUR");
         $currentPrice = $response->getContent();
         $currentPrice = json_decode($currentPrice)->EUR;
+
+        $date = new \DateTime();
+        $ethEntity = new Eth();
+
+        $ethEntity->setPrice($currentPrice);
+        $ethEntity->setDate($date);
+
+        $this->entityManager->persist($ethEntity);
+        $this->entityManager->flush();
+
         $output->writeln("ETH Price Today is : " .$currentPrice. "€");
 
 

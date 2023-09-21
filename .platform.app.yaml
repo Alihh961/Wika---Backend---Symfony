@@ -1,0 +1,9 @@
+name: wika
+
+type: 'php:8.2'
+
+hooks:
+  build: |
+    composer install --prefer-dist --no-progress --no-suggest
+    php bin/console cache:clear
+    php bin/console assets:install --symlink

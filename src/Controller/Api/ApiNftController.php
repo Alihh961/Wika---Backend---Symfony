@@ -47,7 +47,7 @@ class ApiNftController extends AbstractController
 
                 }
 
-                $nfts = $qb->setMaxResults($str)
+                $nfts = $qb->setMaxResults($maxNumberOfNfts)
                     ->getQuery()
                     ->getResult();
 

@@ -7,7 +7,9 @@
   font-size: large;
   overflow: hidden;
   overflow-y: auto;
-  height: 100vh;
+  height: -webkit-fill-available;
+  //left: -15%;
+
 
 
   &::-webkit-scrollbar-track {

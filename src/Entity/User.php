@@ -59,7 +59,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(["user"])]
     private ?bool $isVerified = false;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist'])]
     private ?VerifyEmail $verifyEmail = null;
 
     public function __construct()

@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class ApiUserController extends AbstractController
 {
     #[Route('/api/user', name: 'app_api_user')]
-    public function getUserInfo(UserInterface $user)
+    public function getUserInfo()
     {
 
         return $this->json($this->getUser(), context: ['groups' => ['user']]);
