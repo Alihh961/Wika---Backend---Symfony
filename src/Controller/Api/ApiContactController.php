@@ -33,7 +33,7 @@ class ApiContactController extends AbstractController
                 $size = $uploadedFile->getSize(); // in bytes , divid by 10^6 to have the size in megabytes
 
                 if ($size > 5242880) {
-                    return new JsonResponse(["Error" => "File size can't exceeds 5MB"]);
+                    return new JsonResponse("File size can't exceeds 5MB" , 413);
                 }
             }
 
@@ -43,26 +43,33 @@ class ApiContactController extends AbstractController
             $senderName = $request->request->get("senderName");
             $message = $request->request->get("message");
 
-            $info = [
+            //check that all fields were filled except Image
+            if($email && $subject && $senderName && $message){
+                $info = [
 
-                "email" => $email,
-                "subject" => $subject,
-                "senderName" => $senderName,
-                "message" => $message
+                    "email" => $email,
+                    "subject" => $subject,
+                    "senderName" => $senderName,
+                    "message" => $message
 
-            ];
+                ];
 
-            $contactEntity = $this->uploadContactImageService->uploadFile($uploadedFile, $info);
+                $contactEntity = $this->uploadContactImageService->uploadFile($uploadedFile, $info);
 
-            $this->entityManager->persist($contactEntity);
-            $this->entityManager->flush();
+                $this->entityManager->persist($contactEntity);
+                $this->entityManager->flush();
 
-            return new JsonResponse(["message" => "Message received with success"] , Response::HTTP_ACCEPTED);
+                return new JsonResponse("Message received with success" , 202);
+            }else{
+                return new JsonResponse("All fields are required" , 400);
+
+            }
+
 
 
         }
         catch (\Exception $e){
-            return new JsonResponse(["Error" => $e] , Response::HTTP_NOT_ACCEPTABLE  );
+            return new JsonResponse($e , 406  );
         }
 
     }
