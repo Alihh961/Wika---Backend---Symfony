@@ -1,6 +1,6 @@
 {
     "type": "project",
-    "license": "proprietary",
+    "license": "proprietary2",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
