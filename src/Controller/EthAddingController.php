@@ -16,9 +16,12 @@ class EthAddingController extends AbstractController{
     public function setEthPrice(HttpClientInterface $httpClient , EntityManagerInterface $entityManager){
 
         try{
-            $response = $httpClient->request("GET" , "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=EUR");
-            $currentPrice = $response->getContent();
-            $currentPrice = json_decode($currentPrice)->EUR;
+//            $response = $httpClient->request("GET" , "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=EUR");
+//            $currentPrice = $response->getContent();
+//            $currentPrice = json_decode($currentPrice)->EUR;
+
+            $currentPrice = rand(100000,130000)/100;
+
 
             $date = new \DateTime();
             $ethEntity = new Eth();
@@ -28,7 +31,7 @@ class EthAddingController extends AbstractController{
 
             $entityManager->persist($ethEntity);
             $entityManager->flush();
-            return $this->json("Data added with success" , 200);
+            return $this->json("Data added with success!" , 200);
         }
         catch(\Exception $exception){
             return $this->json($exception , 403);
