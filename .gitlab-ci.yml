@@ -1,0 +1,44 @@
+stages:
+  - build
+  - build2
+  - deploy
+
+build the application:
+  stage: build
+  image: pockost/php:8.1-apache-bookworm
+  script:
+    - composer install --no-scripts --no-dev --optimize-autoloader --no-interaction
+  artifacts:
+    paths:
+      - vendor
+
+
+build scss:
+  stage: build2
+  image: node:18
+  script:
+    - npm install
+    - yarn build
+  artifacts:
+    paths:
+      - public/build
+
+deploy the application with vendor:
+  stage: deploy
+  image: pockost/phploy:4.9.3
+  script:
+    - phploy -s api-production-with-vendor
+  only:
+    changes:
+      - composer.json
+      - composer.lock
+
+deploy the application without vendor:
+  stage: deploy
+  image: pockost/phploy:4.9.3
+  script:
+    - phploy -s api-production-without-vendor
+  except:
+    changes:
+      - composer.json
+      - composer.lock

@@ -62,7 +62,6 @@ class NftController extends AbstractController
             $imageName = $form->get('name')->getData();
 
             if ($file) {
-
                 $mediaEntity = $this->createMediaService->createMediaFromUploadFile($file, $imageDescription, $imageName);
                 $reflectionClass = new \ReflectionClass($mediaEntity);
 

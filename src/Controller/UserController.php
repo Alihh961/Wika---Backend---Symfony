@@ -129,7 +129,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+        dd($form->get("roles")->getData());
             $newRoles = $form->get("roles")->getData();
 
             $user->setRoles([$newRoles]);
