@@ -12,7 +12,6 @@ build the application:
     paths:
       - vendor
 
-
 build scss:
   stage: build2
   image: node:18
