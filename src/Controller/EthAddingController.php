@@ -34,7 +34,7 @@ class EthAddingController extends AbstractController{
 
             $entityManager->persist($ethEntity);
             $entityManager->flush();
-            return $this->json($date , 200);
+            return $this->json("The Eth Price was added with successful" , 200);
         }
         catch(\Exception $exception){
             return $this->json($exception , 403);

@@ -6,6 +6,7 @@ use App\Entity\SubCategory;
 use App\Form\SearchFormType;
 use App\Form\SubCategoryType;
 use App\Repository\SubCategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,14 +44,16 @@ class SubCategoryController extends AbstractController
     }
 
     #[Route('/new', name: 'app_sub_category_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SubCategoryRepository $subCategoryRepository): Response
+    public function new(Request $request, SubCategoryRepository $subCategoryRepository,EntityManagerInterface $entityManager): Response
     {
         $subCategory = new SubCategory();
         $form = $this->createForm(SubCategoryType::class, $subCategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $subCategoryRepository->save($subCategory, true);
+
+        $entityManager->persist($subCategory);
+        $entityManager->flush();
 
             return $this->redirectToRoute('app_sub_category_index', [], Response::HTTP_SEE_OTHER);
         }

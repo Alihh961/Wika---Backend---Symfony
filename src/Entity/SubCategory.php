@@ -25,9 +25,10 @@ class SubCategory
     #[ORM\ManyToMany(targetEntity: Nft::class, mappedBy: 'subCategory')]
     private Collection $nfts;
 
-    #[ORM\ManyToOne]
+
+    #[ORM\ManyToOne(inversedBy: 'subCategories')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Category $Category = null;
+    private ?Category $category = null;
 
     public function __construct()
     {
@@ -80,12 +81,12 @@ class SubCategory
 
     public function getCategory(): ?Category
     {
-        return $this->Category;
+        return $this->category;
     }
 
-    public function setCategory(?Category $Category): static
+    public function setCategory(?Category $category): static
     {
-        $this->Category = $Category;
+        $this->category = $category;
 
         return $this;
     }

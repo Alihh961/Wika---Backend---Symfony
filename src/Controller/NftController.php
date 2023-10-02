@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Validator\Constraints\Date;
 
 #[Route('/admin/nft')]
 class NftController extends AbstractController
@@ -74,6 +75,8 @@ class NftController extends AbstractController
                     $nft->setAudio($mediaEntity);
                 }
             }
+            $date = new \DateTime();
+            $nft->setCreatedAt($date);
 
 
             $nftRepository->save($nft, true);
