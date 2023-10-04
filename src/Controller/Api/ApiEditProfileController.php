@@ -28,9 +28,14 @@ class ApiEditProfileController extends AbstractController{
         $firstName = $data["firstName"];
         $lastName =$data["lastName"];
         $receivedCurrentPassword = $data["currentPassword"];
-        $newPassword = $data["newPassword"];
-        if( !$firstName || !$lastName ||  !$receivedCurrentPassword || !$newPassword){
+        $newPassword = $data["password"];
+        $confNewPassword = $data['confPassword'];
+        if( !$firstName || !$lastName ||  !$receivedCurrentPassword || !$newPassword || !$confNewPassword ){
             return new JsonResponse("All fields are required", 406);
+        }
+
+        if($newPassword !== $confNewPassword){
+            return new JsonResponse( "The password doesn't match the confirmation password" ,401);
         }
 
 

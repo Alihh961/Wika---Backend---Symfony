@@ -6,6 +6,7 @@ use App\Entity\Address;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,12 +26,22 @@ class ApiUserController extends AbstractController
     #[Route('/api/register', methods : ["POST"])]
     public function setUser(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager)
     {
+
         $data = json_decode($request->getContent(), true);
 
+        $now = new \DateTime();
+        $dateOfBirth = new \DateTime($data["dateOfBirth"]);
+        $age = $now->diff($dateOfBirth);
+        $age = $age->y; // get his year age
+
+
+        if($age < 18){
+            return new JsonResponse("You must have at least 18 years old" , 400);
+
+        }
 
         if ($data["password"] != $data["confPassword"]) {
-            throw new \Exception("Password doesn't match!");
-
+            return new JsonResponse("Passwords doesn't match" , 400);
         }
 
 
@@ -63,7 +74,8 @@ class ApiUserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
         } catch (\Exception $exception) {
-            throw new HttpException(400, "User Already Exists");
+            return new JsonResponse("Email already exist!" , 400);
+
         }
 
 

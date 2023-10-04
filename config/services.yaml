@@ -6,6 +6,8 @@
 parameters:
     upload_file: '%kernel.project_dir%/public/uploads/nfts'
     upload_file_contact : '%kernel.project_dir%/public/uploads/contactFiles'
+#    server_url: 'http://wika-symfony.atwebpages.com'
+    server_url : 'https://127.0.0.1:8000'
 
 services:
     # default configuration for services in *this* file

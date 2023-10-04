@@ -7,6 +7,7 @@ use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,11 +24,14 @@ class ResetPasswordController extends AbstractController
 {
     use ResetPasswordControllerTrait;
 
+    private String $serverUrl;
     public function __construct(
         private ResetPasswordHelperInterface $resetPasswordHelper,
         private EntityManagerInterface $entityManager,
-        private HttpClientInterface $httpClient
+        private HttpClientInterface $httpClient,
+        private ParameterBagInterface $parameterBag
     ) {
+        $this->serverUrl = $this->parameterBag->get("server_url");
     }
 
     /**
@@ -157,7 +161,7 @@ class ResetPasswordController extends AbstractController
         }
 
 
-        $resetLink = 'https://127.0.0.1:8000/reset-password/reset/'. $resetToken->getToken();
+        $resetLink = $this->serverUrl.'/reset-password/reset/'.$resetToken->getToken();
 
         $this->httpClient->request('POST', "https://api.brevo.com/v3/smtp/email", [
             'headers' => [
