@@ -4,17 +4,29 @@ namespace App\Controller\Api;
 
 use App\Entity\Address;
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Util\Json;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
+
 
 class ApiUserController extends AbstractController
 {
+
+
+    public function __construct(
+        private SerializerInterface $serializer
+    )
+    {
+
+    }
+
     #[Route('/api/user')]
     public function getUserInfo()
     {
@@ -23,7 +35,7 @@ class ApiUserController extends AbstractController
 
     }
 
-    #[Route('/api/register', methods : ["POST"])]
+    #[Route('/api/register', methods: ["POST"])]
     public function setUser(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager)
     {
 
@@ -35,13 +47,13 @@ class ApiUserController extends AbstractController
         $age = $age->y; // get his year age
 
 
-        if($age < 18){
-            return new JsonResponse("You must have at least 18 years old" , 400);
+        if ($age < 18) {
+            return new JsonResponse("You must have at least 18 years old", 400);
 
         }
 
         if ($data["password"] != $data["confPassword"]) {
-            return new JsonResponse("Passwords doesn't match" , 400);
+            return new JsonResponse("Passwords doesn't match", 400);
         }
 
 
@@ -74,7 +86,7 @@ class ApiUserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
         } catch (\Exception $exception) {
-            return new JsonResponse("Email already exist!" , 400);
+            return new JsonResponse("Email already exist!", 400);
 
         }
 
@@ -83,4 +95,46 @@ class ApiUserController extends AbstractController
     }
 
 
+    #[Route('/api/login_user', methods: ["POST"])]
+    public function apiLogin(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher
+        , JWTTokenManagerInterface   $JWTTokenManager): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $email = $data['username'] ?? null;
+        $password = $data['password'] ?? null;
+
+        if (!$email || !$password) {
+            return new JsonResponse(['error' => 'Invalid credentials'], JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
+        $user = $userRepository->findOneBy(['email' => $email]);
+
+
+        if (!$user || !$userPasswordHasher->isPasswordValid($user, $password)) {
+            return new JsonResponse(['error' => 'Invalid credentials'], JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
+        $token = $JWTTokenManager->create($user);
+
+        $user = $this->serializer->normalize($user, null, ['groups' => ['user']]);
+
+        return $this->json(['token' => $token, 'user' => $user]);
+    }
+
+    #[Route('/api/check_token', methods: ["POST"])]
+    public function checkUser(Request $request)
+    {
+
+        $user = $this->getUser();
+
+        if ($user) {
+
+            $user = $this->serializer->normalize($user, null, ['groups' => ['user']]);
+            return new JsonResponse($user);
+
+        }
+
+        return new JsonResponse(["Error" => "Invalid token"]);
+    }
 }

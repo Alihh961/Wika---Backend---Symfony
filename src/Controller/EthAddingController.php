@@ -22,8 +22,8 @@ class EthAddingController extends AbstractController{
 //            $currentPrice = $response->getContent();
 //            $currentPrice = json_decode($currentPrice)->EUR;
 
-            $currentPrice = rand(100000,130000)/100;
 
+            $currentPrice = rand(100000,130000)/100;
 
             $date = new \DateTime("now" ,new \DateTimeZone("Europe/Paris"));
             $ethEntity = new Eth();

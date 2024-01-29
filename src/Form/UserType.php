@@ -58,7 +58,6 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('gender', ChoiceType::class, [
-//                "mapped"=> false,
                 "choices" => [
                     "Male" => "male",
                     "Female" => "female"

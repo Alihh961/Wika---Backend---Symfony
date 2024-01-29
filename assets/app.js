@@ -26,9 +26,11 @@ import "@fortawesome/fontawesome-free/js/solid";
 import "@fortawesome/fontawesome-free/js/regular";
 import "@fortawesome/fontawesome-free/js/brands";
 
+
 // Sign-in Form
 function checkInputValues() { // Translate the label when focusing in and out in the input
 
+    console.log("tititititi");
     let inputs = [document.querySelectorAll(".login-input"), document.querySelectorAll(".register-input")];
 
     for (let i = 0; i < inputs.length; i++) {

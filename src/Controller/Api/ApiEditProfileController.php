@@ -22,6 +22,7 @@ class ApiEditProfileController extends AbstractController{
     EntityManagerInterface $entityManager){
 
 
+
         $data = json_decode($request->getContent() , true);
 
         $idUser = $data["id"];

@@ -6,8 +6,12 @@ use App\Entity\Nft;
 use App\Repository\AudioRepository;
 use App\Repository\ImageRepository;
 use App\Repository\NftRepository;
+use App\Repository\UserRepository;
 use App\Repository\VideoRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Util\Json;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,7 +32,7 @@ class ApiNftController extends AbstractController
         $maxNumberOfNfts = $request->query->get('m') ?: null;
         $orderBy = $request->query->get("o") ?: null;
 
-
+//        return $this->json([$subCategoryName , $searchByImageName , $maxNumberOfNfts , $orderBy]);
         if ($subCategoryName === "all" || $subCategoryName === "") { // selecting all nft if no para set or set to all for subcategories
 
             if ($searchByImageName != null || $orderBy != null) {
@@ -45,6 +49,7 @@ class ApiNftController extends AbstractController
 
                     $qb->orderBy("n.createdAt", $orderBy);
 
+
                 }
 
                 $nfts = $qb->setMaxResults($maxNumberOfNfts)
@@ -57,22 +62,26 @@ class ApiNftController extends AbstractController
                     ->getQuery()
                     ->getResult();
             }
-        } else { //selecting nft of certian subCAtegory
+        } else { //selecting nft of certian subCategory
             $qb = $nftRepository->createQueryBuilder("n")
                 ->join("n.subCategory", "s")
                 ->where("s.name = :subName")
                 ->setParameter("subName", $subCategoryName)
                 ->setMaxResults($maxNumberOfNfts);
             if ($searchByImageName) {
+
                 $qb = $qb->join("n.image", "i")
-                    ->where("i.name = imageName")
-                    ->setParameter("imageName", $searchByImageName);
+                    ->andWhere("i.name LIKE :imageName")
+                    ->setParameter("imageName", '%' . $searchByImageName . '%');
             }
 
             if ($orderBy == "asc" || $orderBy == "desc") { // if an order by is specified
                 $qb = $qb->orderBy("n.createdAt", $orderBy)
                     ->setMaxResults($maxNumberOfNfts);
+
+
             }
+
 
             $nfts = $qb->getQuery()->getResult();
 
@@ -82,7 +91,7 @@ class ApiNftController extends AbstractController
             return $this->json($nfts, context: ["groups" => ["nft"]]);
 
         }
-        return $this->json("No results found for this SubCategory");
+        return $this->json("No results found for this SubCategory", 400);
 
 
     }
@@ -162,4 +171,70 @@ class ApiNftController extends AbstractController
 
         return new Response($quantity);
     }
+
+    #[Route('add-nft-to-user', methods: ["POST"])]
+    public function addNftToUser(Request $request, NftRepository $nftRepository, UserRepository $userRepository, EntityManagerInterface $entityManager)
+    {
+
+        $data = json_decode($request->getContent(), true);
+
+        try {
+            $user = $this->getUser();
+            $nftId = $data['nftId'];
+
+            $nft = $nftRepository->findOneBy(["id" => $nftId]);
+
+            if ($user) {
+                $user->addNft($nft);
+                $entityManager->persist($user);
+                $entityManager->flush();
+            } else {
+                return $this->json(["error" => "Error User"], 400);
+            }
+            return $this->json(["message" => "added with success"]);
+
+        } catch (\Exception $e) {
+            return $this->json(["error" => $e]);
+        }
+
+    }
+
+    #[Route('get-user-nfts')]
+    public function getNftOfUser(Request $request, UserRepository $userRepository)
+    {
+
+        $user = $this->getUser();
+        $nfts = $user->getNfts();
+
+        return $this->json($nfts, context: ["groups" => ["nft"]]);
+    }
+
+    #[Route('delete-nft-of-user/{id}', methods: ["DELETE"])]
+    public function deleteNft(Request $request , NftRepository $nftRepository, String $id ,EntityManagerInterface $entityManager )
+    {
+
+        $nftId = $id;
+
+        $user = $this->getUser();
+        try{
+
+            $nft = $nftRepository->findOneBy(['id'=>$nftId]);
+            $user->removeNft($nft);
+
+            $entityManager->persist($nft);
+            $entityManager->flush();
+
+            return new JsonResponse(["message" => "Deleted with success"] ,200);
+
+
+        }
+        catch(\Exception $e){
+
+            return new JsonResponse(["error" => $e] ,400);
+
+        }
+
+
+    }
+
 }

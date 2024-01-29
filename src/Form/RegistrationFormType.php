@@ -42,8 +42,8 @@ class RegistrationFormType extends AbstractType
             ->add('lastName', TextType::class, [
                 "constraints" => [
                     new Regex([
-                        "pattern" => "/^(?!.*\s{3})[a-zA-Z\s]{2,}$/",
-                        "message" => "At least two letters, only letters are allowed"
+                        "pattern" => "/^[a-zA-Z]+(\s[a-zA-Z]+)?$/",
+                        "message" => "Only letters are allowed and max one white space"
                     ]),
                     new NotBlank([
                         'message' => 'Please enter a Last Name',
@@ -68,7 +68,7 @@ class RegistrationFormType extends AbstractType
                     new Email([]),
                     new Regex([
                         "pattern" => '/^[^@\t\r\n]+@[^@\t\r\n]+\.[^@\t\r\n]+$/',
-                        "message" => "Email: At least 8 characters with at least one Capital letter,one Small letter,one Number and one Special Char"
+                        "message" => "Invalid Email"
                     ]),
                     new NotBlank([
                         'message' => 'Please enter an Email',

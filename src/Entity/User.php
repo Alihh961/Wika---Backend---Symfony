@@ -33,11 +33,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[Groups(["user"])]
+    #[Groups(["user" , "login"])]
     #[ORM\Column(length: 255)]
     private ?string $firstName = null;
 
-    #[Groups(["user"])]
+    #[Groups(["user" , "login"])]
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
     #[Groups(["user"])]
@@ -197,7 +197,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+
     public function __toString():string{
         return $this->getFirstName();
     }
